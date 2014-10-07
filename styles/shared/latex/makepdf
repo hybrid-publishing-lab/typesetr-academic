@@ -1,0 +1,5 @@
+#!/bin/bash
+
+export TEXINPUTS=".:include:"
+export BSTINPUTS="include:"
+exec latexmk -silent -xelatex -pdf INTERPOLATETARGET

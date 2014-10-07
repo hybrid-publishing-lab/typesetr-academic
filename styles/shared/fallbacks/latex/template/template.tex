@@ -1,0 +1,80 @@
+% -*- TeX-engine: xetex -*-
+% book example based on André Miede's classithesis
+\documentclass[fontsize=10pt,paper=a4]{scrreprt} % KOMA-Script article
+INTERPOLATEBABEL
+\usepackage{typesetr}
+
+% allow list-nesting up to 9 levels (which is what google docs and openoffice allow)
+\usepackage{enumitem}
+\setlistdepth{9}
+
+% tweaked word-style enumerate; latex default in comments at EOL
+\newlist{ol}{enumerate}{9}
+\setlist[ol,1]{label=\arabic*.} %\arabic*.
+\setlist[ol,3]{label=\alph*)} % (\alph*)
+\setlist[ol,2]{label=\roman*.} % \roman*.
+\setlist[ol,4]{label=\arabic*.} %\Alph*.
+\setlist[ol,5]{label=\alph*)}
+\setlist[ol,6]{label=\roman*.}
+\setlist[ol,7]{label=\arabic*.}
+\setlist[ol,8]{label=\alph*)}
+\setlist[ol,9]{label=\roman*)}
+
+\let\tystrol\ol
+
+% tweaked word-style itemize; latex default in comments at EOL
+\newlist{ul}{itemize}{9}
+\setlist[ul,1]{label=\textbullet} % \textbullet
+\setlist[ul,2]{label={$\circ$}} % \normalfont\bfseries \textendash
+% another alternative:{{\tiny\raisebox{0.15em}{$\blacksquare$}}}
+\setlist[ul,3]{label=\tiny\raisebox{0.2em}{\rule{.5em}{.5em}}} %\textasteriskcentered
+\setlist[ul,4]{label={$\bullet$}} %\textperiodcentered
+\setlist[ul,5]{label={$\circ$}}
+\setlist[ul,6]{label={\tiny\raisebox{0.2em}{\rule{.5em}{.5em}}}}
+\setlist[ul,7]{label={\textbullet}}
+\setlist[ul,8]{label={$\circ$}}
+\setlist[ul,9]{label={\tiny\raisebox{0.2em}{\rule{.5em}{.5em}}}}
+
+\let\tystrul\ul
+
+\usepackage[authordate]{biblatex-chicago}
+\addbibresource{bibliography.bib}
+\hypersetup{
+colorlinks=true,
+linkcolor=black,
+citecolor=gray,
+urlcolor=black,
+INTERPOLATEMETA
+}
+\renewcommand{\thesection}{\arabic{section}}
+\newif\iftoc
+\toctrue
+\newcommand{\includetoc}{
+    \whendefined{\tystrtoc}{
+        \IfStrEq{\tystrtoc}{no}
+        {\tocfalse}{}
+    }
+    \iftoc
+        \tableofcontents
+        \newpage
+    \fi
+}
+\begin{document}
+INTERPOLATEHEAD
+\title{\tystrtitle}
+\whendefined{\tystrsubtitle}{\subtitle{\tystrsubtitle}}
+\whendefined{\tystrauthor}{\author{\protect\StrSubstitute{\tystrauthor}{;}{,}}}
+\date{\whendefined{\tystrversion}{Version \tystrversion\whendefined{\tystrdate}{\\[1em]}}\whendefined{\tystrdate}{\large{\tystrdate}}}
+\maketitle
+\whendefined{\tystrabstract}{
+\begin{abstract}
+\noindent\tystrabstract
+\end{abstract}
+}
+\includetoc
+INTERPOLATEBODY
+\end{document}
+%%% Local Variables:
+%%% mode: latex
+%%% TeX-master: t
+%%% End:

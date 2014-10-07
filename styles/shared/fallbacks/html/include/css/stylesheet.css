@@ -1,0 +1,64 @@
+html { background-color: #eef; color: #333; }
+body { width: 50em; background-color: white; margin-left: auto; margin-right: auto; padding: 4em 8em;}
+h1.title { font-variant: small-caps; font-size: xx-large; font-weight: 700; margin-bottom: .2em;}
+h2.subtitle { color: #bbb; margin-bottom: .5em; font-size: large; margin: -.2em 0 .4em 0; font-style: italic;}
+h1, h2, h3, h4 { font-family:  'Lato', 'OFL Sorts Mill Goudy'; font-weight: 200}
+h1 { font-size: x-large; } h2 { font-size: large; }
+p { line-height: 1.4; }
+*, *:after, *:before {box-sizing: border-box;}
+* {font-family: 'Lato';}
+.right {text-align: right} .center {text-align: center} .justify {text-align: justify}
+.err { text-decoration-line: underline; text-decoration-style: wavy; text-decoration-color: red; } /* {border: 2px solid red} */
+
+.document-properties  { margin:0; padding: 0}
+.document-properties dt { float: left; font-weight: bold; padding-right: .5em; }
+
+ol            { list-style-type: decimal; }
+ol > li > ol         { list-style-type: lower-alpha; }
+ol > li > ol > li > ol      { list-style-type: lower-roman; }
+
+ol > li > ol > li > ol > li > ol            { list-style-type: decimal; }
+ol > li > ol > li > ol > li > ol > li > ol         { list-style-type: lower-alpha; }
+ol > li > ol > li > ol > li > ol > li > ol > li > ol      { list-style-type: lower-roman; }
+
+ol > li > ol > li > ol > li > ol > li > ol > li > ol > li > ol            { list-style-type: decimal; }
+ol > li > ol > li > ol > li > ol > li > ol > li > ol > li > ol > li > ol         { list-style-type: lower-alpha; }
+ol > li > ol > li > ol > li > ol > li > ol > li > ol > li > ol > li > ol > li > ol      { list-style-type: lower-roman; }
+
+ul            { list-style-type: disc; }
+ul > li > ul         { list-style-type: circle; }
+ul > li > ul > li > ul      { list-style-type: square; }
+
+ul > li > ul > li > ul > li > ul            { list-style-type: disc; }
+ul > li > ul > li > ul > li > ul > li > ul         { list-style-type: circle; }
+ul > li > ul > li > ul > li > ul > li > ul > li > ul      { list-style-type: square; }
+
+ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul            { list-style-type: disc; }
+ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul         { list-style-type: circle; }
+ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul > li > ul      { list-style-type: square }
+
+ol.decimal      { list-style-type: decimal; }
+ol.lower-alpha  { list-style-type: lower-alpha; }
+ol.lower-roman  { list-style-type: lower-roman; }
+ol.upper-alpha  { list-style-type: upper-alpha; }
+ol.upper-roman  { list-style-type: upper-roman; }
+
+ul.disc   { list-style-type: disc; }
+ul.circle { list-style-type: circle; }
+ul.square { list-style-type: square; }
+
+.noteref { vertical-align: super; text-decoration: none; background-color: lightblue; font-size: x-small}
+.endnotes { font-size: small; background-color: lightblue; border-top: 1px solid black; counter-reset: endnote;}
+.endnotes:before { content: "Endnotes"; font-size: large}
+.endnote:before { content: counter(endnote) ". "; counter-increment: endnote;}
+.endnote:first-child { margin-top: 1em; }
+body { counter-reset: table figure;}
+caption:not(empty):before {counter-increment: table;  content: "Table " counter(table) ":  "; font-weight: bold;}
+caption:empty:before {counter-increment: table;  content: "Table " counter(table);}
+tr:nth-child(even) {background: #ddd;}
+tr:nth-child(odd) {background: #efefef;}
+figcaption, caption { caption-side:bottom; padding-top: 0.4em; padding-bottom: 1em;}
+table { border: 1px; }
+figcaption:not(empty):before: {counter-increment: figure; content: "Figure " counter(figure) ":  "; font-weight: bold;}
+figcaption:empty:before {counter-increment: figure; content: "Figure " counter(figure)}
+figure { margin-left:0; margin-right: 0; }

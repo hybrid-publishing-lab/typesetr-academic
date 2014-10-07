@@ -1,0 +1,22 @@
+title:
+  required: true
+subtitle:
+client:
+project:
+author:
+  type: multiline
+  help: List of authors separated by semicolon
+abstract:
+  type: rich-text
+keywords:
+version:
+date:
+  type: date
+  help: Date in yyyy-mm-dd format
+toc:
+  label: Table of contents
+  type: boolean
+  default: "yes"
+  help: Include a table of contents
+section-numbering-depth:
+  default: "0"

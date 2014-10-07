@@ -1,0 +1,27 @@
+pre { background-color: #f8f8f8; padding: 6px 10px; border-radius: 3px;}
+pre .hll{background-color:#ffc}
+pre .err{color:#a61717;background-color:#e3d2d2}
+pre .gd{color:#000;background-color:#fdd}
+pre .ge{color:#000;font-style:italic}
+pre .gi{color:#000;background-color:#dfd}
+pre .go{color:#888}
+pre .gs{font-weight:700}
+pre .gu{color:#aaa}
+pre .nb{color:#0086B3}
+pre .nd{color:#3c5d5d;font-weight:700}
+pre .ni{color:purple}
+pre .nt{color:navy}
+pre .w{color:#bbb}
+pre .sr{color:#009926}
+pre .ss{color:#990073}
+pre .c,pre .cm,pre .c1{color:#998;font-style:italic}
+pre .k,pre .o,pre .kc,pre .kd,pre .kn,pre .kp,pre .kr,pre .ow{color:#000;font-weight:700}
+pre .cp,pre .cs{color:#999;font-weight:700;font-style:italic}
+pre .gr,pre .gt{color:#a00}
+pre .gh,pre .bp{color:#999}
+pre .gp,pre .nn{color:#555}
+pre .kt,pre .nc{color:#458;font-weight:700}
+pre .m,pre .mf,pre .mh,pre .mi,pre .mo,pre .il{color:#099}
+pre .s,pre .sb,pre .sc,pre .sd,pre .s2,pre .se,pre .sh,pre .si,pre .sx,pre .s1{color:#d01040}
+pre .na,pre .no,pre .nv,pre .vc,pre .vg,pre .vi{color:teal}
+pre .ne,pre .nf,pre .nl{color:#900;font-weight:700}

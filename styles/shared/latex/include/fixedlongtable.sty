@@ -1,0 +1,29 @@
+%long table package with fix
+
+\ProvidesPackage{fixedlongtable}
+
+\usepackage{longtable}
+\usepackage{etoolbox}
+
+%fix from <http://tex.stackexchange.com/questions/40730/vspace-before-itemize-in-a-table-cell-tabular-vs-longtable>
+
+\def\LT@startpbox#1{%
+  \bgroup
+    \let\@footnotetext\LT@p@ftntext
+    \setlength\hsize{#1}%
+    \@arrayparboxrestore
+   \everypar{%
+      \vrule \@height \ht\@arstrutbox \@width \z@
+      \everypar{}}%
+%    \vrule \@height \ht\@arstrutbox \@width \z@
+} % END longtable spacing fix
+
+%fix from <http://tex.stackexchange.com/questions/32553/longtable-caption-without-incrementing-table>
+\newif\ifLT@nocaption
+\preto\longtable{\LT@nocaptiontrue}
+\appto\endlongtable{%
+  \ifLT@nocaption
+    \addtocounter{table}{\m@ne}%
+  \fi}
+\preto\LT@caption{%
+  \noalign{\global\LT@nocaptionfalse}}

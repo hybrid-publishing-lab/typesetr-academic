@@ -1,0 +1,350 @@
+% Common style sheet for all typesetr templates
+\ProvidesPackage{typesetr}
+%---------------------------------------------------------------------------
+%--- Includes
+%---------------------------------------------------------------------------
+%
+% These are alphabetically ordered, where lack of package conflicts allows.
+%
+% First, don't litter the log with lots of rubbish.
+\PassOptionsToPackage{log-declarations=false}{xparse}
+%
+% hyperref is a frequent source of package conflicts, see
+% <http://www.tug.org/applications/hyperref/ftp/README> PACKAGE COMPATIBILITY
+% usually putting it first works. If it turns out to cause problem we might
+% have to migrate it back to the individual styles again.
+%
+% The [pdfa] option makes hyperref create links that are consistent with the
+% requirements for PDF/A (we don't create valid PDF/A yet, but it would be
+% desirable and this is a first step)
+%
+% The [destlabel] option enables fragment URLs in pdfs,
+% see <http://tools.ietf.org/html/rfc3778#section-3>
+%
+% Although they don't work in OS X's pdfkit, they can be accessed like so in
+% acroread:
+%
+%  acroread /a 'nameddest=h.5kvjtksy022i' foo.pdf
+%
+%  or directly as 'foo.pdf#nameddest=h.5kvjtksy022i' in pdf.js
+%
+\usepackage{url}
+\urlstyle{same} % don't use horrible typewriter font urls
+\usepackage{hyperxmp}
+\usepackage[destlabel,pdfa,breaklinks=true]{hyperref}
+\usepackage[svgnames,table,xcdraw]{xcolor}
+\usepackage[normalem]{ulem}    % for uline and sout; brittle, should only be
+                               % used for error markup and similar
+\usepackage{fixltx2e}          % fix several latex bugs; NOTE: shouldn't be
+                               % needed if fontspec is included, but
+                               % just in case
+
+\usepackage[export]{adjustbox} % figure-including-caption-sizing; 'export' is
+                               % needed to extend includegraphics keyword args
+\usepackage{calc}              % vaguely sane infix math
+\usepackage{isodate}           % multilingual date formatting, "1st January 2001", etc.
+\usepackage{fontspec}          % truetype/otf font selection
+\usepackage{needspace}         % table orphan prevention
+\usepackage{graphicx}          % basic graphic inclusion functionality
+\usepackage{booktabs}          % toprule
+\usepackage{siunitx}           % dot aligned numbers
+\usepackage{xkeyval}           % for `\foo[key=val,booleankey]`
+\usepackage{xstring}           % string comparisons for latex code
+\usepackage{xparse}            % NewDocumentCommand = better newcommand
+\usepackage{etoolbox}          % better control constructs and definitions
+\usepackage{etex}
+
+\usepackage{fancyvrb}
+\usepackage{typesetrpygments}  % FIXME(alexander): include conditionally in
+                               % style templates
+\usepackage{quoting}
+\usepackage{attrib}
+\quotingsetup{font={itshape,smaller}}
+% blockquote cites like so: `-- Some Author, "Title"`
+\def\PreTrib{—}\def\PostTrib{}
+
+
+%---------------------------------------------------------------------------
+%--- Metadata commands
+%---------------------------------------------------------------------------
+% Helpers: metadata
+% check arg 1 and if defined and non-empty does arg 2
+% NB: using \newrobustcmd here breaks the book/classic test
+\newcommand{\whendefined}[2]{\ifdefvoid{#1}{}{#2}}
+\newcommand{\whenundefined}[2]{\ifdefvoid{#1}{#2}{}}
+
+\newcommand{\ifdefinedelse}[3]{%
+  \ifdefined#1%
+      #2%
+  \else%
+      #3%
+  \fi%
+}%
+
+\newcommand{\tystrerror}[1]{%
+  \typeout{LATEXERROR: #1}%
+}
+%----------------
+% Metadata images
+%----------------
+\define@key{tystrimage}{width}{\def\tystrImagewidth{#1}}
+\define@key{tystrimage}{height}{\def\tystrImageheight{#1}}
+\define@key{tystrimage}{display}{} % ignore for now, not needed yet
+% this is for images passed in the meta-data
+\newcommand{\tystrimage}[2][]{%
+  \begingroup
+    \setkeys{tystrimage}{#1}%
+    \tystrimagecommand{#2}%
+  \endgroup
+}
+% default implementation of  tystrimagecommand -- override in styles if needed
+\newcommand{\tystrimagecommand}[1]{
+  % FIXME(alexander): why just width? See this bizarre bug:
+  % <https://github.com/lshift/typesetr/issues/241>
+  \includegraphics[width=\tystrImagewidth\linewidth]{#1}
+}
+
+%---------------------------------------------------------------------------
+%--- Tables
+%---------------------------------------------------------------------------
+% keep track of table nesting
+\newcounter{tablenesting}
+\setcounter{tablenesting}{0}
+
+\newlength{\unpaddedwidth} % used for table column width
+\setlength{\unpaddedwidth}{0.5\linewidth-0.5\paperwidth}
+\newlength{\nestedcolsep} % used for table column width
+
+\newcommand{\setunpaddedwidth}[1]{
+  \ifnumequal{\value{tablenesting}}{0}
+    {\setlength{\unpaddedwidth}{\linewidth-#1\tabcolsep}}{}
+}
+
+% default implementation of table contents
+\newenvironment{tystrtabular}{\tabular}{\endtabular}
+% table wrapper
+\newenvironment{tystrtable}[1] % takes number of cols as arg
+  {\setunpaddedwidth{#1}
+   \setlength{\nestedcolsep}{2\value{tablenesting}}
+   \setlength{\nestedcolsep}{\nestedcolsep*\tabcolsep}
+   \setcounter{tablenesting}{\value{tablenesting}+1}
+   \needspace{6\baselineskip}
+   \centering}
+  {\setcounter{tablenesting}{\value{tablenesting}-1}}
+
+\newcolumntype{P}[1]{>{\raggedright}p{#1}}%
+\newcolumntype{C}[1]{>{\centering}p{#1}}%
+\newcolumntype{R}[1]{>{\raggedleft}p{#1}}%
+\newcolumntype{N}[1]{p{#1}}%
+
+\newcommand{\tystrth}[1]{#1}
+\newcommand{\tystrcolh}[1]{#1}
+
+% increase row spacing
+\renewcommand\arraystretch{1.3}
+
+
+
+%---------------------------------------------------------------------------
+%---Figures
+%---------------------------------------------------------------------------
+
+% Margin figure helper (from koma-script/scrreprt.cls)
+\providecommand\marginline[1]{%
+  \marginpar[\raggedleft{#1}]{\raggedright #1}%
+}
+
+% default implementations of figures
+\newcommand{\tystrmarginfigure}[1]{
+  \marginline{
+    \centering
+    \includegraphics[width=\marginparwidth,
+                     max totalheight={\textheight},
+                     keepaspectratio]{#1}
+  }
+}
+
+\newlength{\tystrfigurewidth}
+\setlength{\tystrfigurewidth}{\linewidth}
+% first arg for width, 2nd caption and 3rd img source
+\newcommand{\@tystrblockfigure}[3]{%
+  \begin{adjustbox}{width=#1\tystrfigurewidth, %
+                    max totalsize={\linewidth}{0.8\textheight},%
+                    center, caption={#2}, figure=h}%
+    \includegraphics{#3}%
+  \end{adjustbox}%
+}
+% caption, img
+\newcommand{\@tystrblockfigureunsized}[2]{%
+  \begin{adjustbox}{max totalsize={\linewidth}{0.8\textheight},%
+                    center, caption={#1}, figure=h}%
+    \includegraphics{#2}%
+  \end{adjustbox}%
+}
+
+\NewDocumentCommand{\tystrblockfigure}{ o m m } {%
+  \IfValueTF{#1}{\@tystrblockfigure{#1}{#2}{#3}}%
+                {\@tystrblockfigureunsized{#2}{#3}}%
+}
+
+% first arg for width, 2nd img source
+\newcommand{\@tystrblockfigurenocap}[2]{%
+  \begin{adjustbox}{width=#1\tystrfigurewidth,%
+                    max totalsize={\linewidth}{0.9\textheight},%
+                    center}%
+    \includegraphics{#2}%
+  \end{adjustbox}%
+}
+\newcommand{\@tystrblockfigurenocapunsized}[1]{%
+  \begin{adjustbox}{max totalsize={\linewidth}{0.9\textheight},%
+                    center}%
+    \includegraphics{#1}%
+  \end{adjustbox}%
+}
+\NewDocumentCommand{\tystrblockfigurenocap}{ o m } {%
+  \mbox{}\vskip 0pt% move into vertical mode, needed for \paragraphs
+  \IfValueTF{#1}{\@tystrblockfigurenocap{#1}{#2}}%
+                {\@tystrblockfigurenocapunsized{#2}}%
+}
+
+\newlength{\tystrfullfigurewidth}
+\setlength{\tystrfullfigurewidth}{\textwidth}
+% first arg for width, 2nd caption and 3rd img source
+\newcommand{\@tystrfullwidthfigure}[3]{%
+  \begin{adjustbox}{width=#1\tystrfullfigurewidth, %
+                    max totalsize={\tystrfullfigurewidth}{0.8\textheight},%
+                    right, caption={#2}, float={figure*}}%
+      \includegraphics{#3}%
+  \end{adjustbox}%
+}
+% caption, img
+\newcommand{\@tystrfullwidthfigureunsized}[2]{%
+  \begin{adjustbox}{max totalsize={\tystrfullfigurewidth}{0.8\textheight},%
+                    right, caption={#1}, figure=h}%
+      \includegraphics{#2}%
+  \end{adjustbox}%
+}
+
+\NewDocumentCommand{\tystrfullwidthfigure}{ o m m } {%
+  \IfValueTF{#1}{\@tystrfullwidthfigure{#1}{#2}{#3}}%
+                {\@tystrfullwidthfigureunsized{#2}{#3}}%
+}
+
+% first arg for width, 2nd img source
+\newcommand{\@tystrfullwidthfigurenocap}[2]{%
+  \begin{adjustbox}{width=#1\tystrfullfigurewidth,%
+                    max totalsize={\tystrfullfigurewidth}{0.9\textheight},%
+                    right}%
+      \includegraphics{#2}%
+  \end{adjustbox}%
+}
+\newcommand{\@tystrfullwidthfigurenocapunsized}[1]{%
+  \begin{adjustbox}{max totalsize={\tystrfullfigurewidth}{0.9\textheight},%
+                    right}%
+      \includegraphics{#1}%
+  \end{adjustbox}%
+}
+
+\NewDocumentCommand{\tystrfullwidthfigurenocap}{ o m } {%
+  \mbox{}\vskip 0pt% move into vertical mode, needed for \paragraphs
+  \IfValueTF{#1}{\@tystrfullwidthfigurenocap{#1}{#2}}%
+                {\@tystrfullwidthfigurenocapunsized{#2}}%
+}
+
+
+%---------------------------------------------------------------------------
+%---Lists
+%---------------------------------------------------------------------------
+% default implementation of lists
+\newenvironment{tystrul}{\itemize}{\enditemize}
+% the dummy optional argument is for start=3 etc. that enumitem supports, but
+% latex's default enumerate macro doesn't
+\newenvironment{tystrol}[1][]{\enumerate}{\endenumerate}
+
+%---------------------------------------------------------------------------
+%---Misc inline markup
+%---------------------------------------------------------------------------
+
+% no-op implementation for user comments
+\newcommand{\comment}[1]{#1}
+
+% add a fake H6 equivalent
+\ProvideDocumentCommand\subsubparagraph{O{}m}{\textsc{#2}}
+
+%---------------------------------------------------------------------------
+%---Internationalization
+%---------------------------------------------------------------------------
+
+%% First of, define a master handles for languages with important regional
+%% variants -- the idea being that you can do something like:
+%%
+%%   \langEN{What is your favorite }\langENuk{colour}\langENus{color}
+%%
+%% FIXME(alexander): a better, but harder to implement mechanism would be
+%%   \langEN[us]{color}{colour}
+%% FIXME(alexander): also, naustrian, canadian and some other language names
+%%   blow up in the iflanguage for some reason that is beyond me; I would hope
+%%   that doing something like this will work robustly
+%%     <http://www.techques.com/question/31-42784/Language-dependent-custom-command>
+%%     or
+%%     <http://tex.stackexchange.com/questions/61598/new-command-with-cases-conditionals-if-thens>
+\newrobustcmd{\langEN}[1]{\iflanguage{american}{#1}{\iflanguage{british}{#1}{}}}
+
+% Swiss German is missing in babel
+\newrobustcmd{\langDE}[1]{\langDEde{#1}} %\langDEat{#1}}
+
+% Swiss French is missing in babel...
+\newrobustcmd{\langFR}[1]{
+  \iflanguage{french}{#1}{\iflanguage{canadien}{#1}{}}}
+
+\newrobustcmd{\langPT}[1]{
+  \iflanguage{portuguese}{#1}{\iflanguage{brazilian}{#1}{}}}
+
+% other candidates for dialects are Spanish and Arabic
+
+%% now all the regional variants, plus languages that are not important enough
+%% to have regional variants
+
+%% generated with
+%%   from converter.lang import *; print "\n".join(r'\newrobustcmd{\lang%s}[1]{\iflanguage{%s}{#1}{}}' % (k.swapcase().replace('-',''), ISO_TO_BABEL[k]) for k in sorted(ISO_TO_BABEL))
+\newrobustcmd{\langAF}[1]{\iflanguage{afrikaans}{#1}{}}
+\newrobustcmd{\langBG}[1]{\iflanguage{bulgarian}{#1}{}}
+\newrobustcmd{\langCA}[1]{\iflanguage{catalan}{#1}{}}
+\newrobustcmd{\langCS}[1]{\iflanguage{czech}{#1}{}}
+\newrobustcmd{\langDA}[1]{\iflanguage{danish}{#1}{}}
+\newrobustcmd{\langDEde}[1]{\iflanguage{ngerman}{#1}{}}
+\newrobustcmd{\langDEat}[1]{\iflanguage{greek}{#1}{}}
+\newrobustcmd{\langEL}[1]{\iflanguage{greek}{#1}{}}
+\newrobustcmd{\langENau}[1]{\iflanguage{australian}{#1}{}}
+\newrobustcmd{\langENca}[1]{\iflanguage{canadian}{#1}{}}
+\newrobustcmd{\langENnz}[1]{\iflanguage{newzealand}{#1}{}}
+\newrobustcmd{\langENuk}[1]{\iflanguage{british}{#1}{}}
+\newrobustcmd{\langENus}[1]{\iflanguage{american}{#1}{}}
+\newrobustcmd{\langES}[1]{\iflanguage{spanish}{#1}{}}
+\newrobustcmd{\langET}[1]{\iflanguage{estonian}{#1}{}}
+\newrobustcmd{\langFI}[1]{\iflanguage{finnish}{#1}{}}
+\newrobustcmd{\langFRfr}[1]{\iflanguage{french}{#1}{}}
+\newrobustcmd{\langFRca}[1]{\iflanguage{canadien}{#1}{}}
+\newrobustcmd{\langGA}[1]{\iflanguage{irish}{#1}{}}
+\newrobustcmd{\langGL}[1]{\iflanguage{galician}{#1}{}}
+\newrobustcmd{\langHE}[1]{\iflanguage{hebrew}{#1}{}}
+\newrobustcmd{\langHR}[1]{\iflanguage{croatian}{#1}{}}
+\newrobustcmd{\langHU}[1]{\iflanguage{hungarian}{#1}{}}
+\newrobustcmd{\langID}[1]{\iflanguage{indonesian}{#1}{}}
+\newrobustcmd{\langIS}[1]{\iflanguage{icelandic}{#1}{}}
+\newrobustcmd{\langIT}[1]{\iflanguage{italian}{#1}{}}
+\newrobustcmd{\langLA}[1]{\iflanguage{latin}{#1}{}}
+\newrobustcmd{\langMS}[1]{\iflanguage{malay}{#1}{}}
+\newrobustcmd{\langNL}[1]{\iflanguage{dutch}{#1}{}}
+\newrobustcmd{\langNO}[1]{\iflanguage{norsk}{#1}{}}
+\newrobustcmd{\langPL}[1]{\iflanguage{polish}{#1}{}}
+\newrobustcmd{\langPTpt}[1]{\iflanguage{portuguese}{#1}{}}
+\newrobustcmd{\langPTbr}[1]{\iflanguage{brazilian}{#1}{}}
+\newrobustcmd{\langRO}[1]{\iflanguage{romanian}{#1}{}}
+\newrobustcmd{\langRU}[1]{\iflanguage{russian}{#1}{}}
+\newrobustcmd{\langSK}[1]{\iflanguage{slovak}{#1}{}}
+\newrobustcmd{\langSL}[1]{\iflanguage{slovene}{#1}{}}
+\newrobustcmd{\langSR}[1]{\iflanguage{serbian}{#1}{}}
+\newrobustcmd{\langSV}[1]{\iflanguage{swedish}{#1}{}}
+\newrobustcmd{\langTR}[1]{\iflanguage{turkish}{#1}{}}
+\newrobustcmd{\langUK}[1]{\iflanguage{ukrainian}{#1}{}}

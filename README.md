@@ -70,7 +70,7 @@ Prerequisites
  - Python 2.7
  - at least 3GB of free Space ( Texlive :/ )
 
-The package manager will solve all dependancies like python.
+The package manager will solve all dependancies.
 
 Package Installation
 ------------
@@ -83,7 +83,7 @@ Add the following lines to your /etc/apt/sources.list:
 
 Execute following lines
 
-      wget -q httsp://repo.consortium.io/apt/debian/ourkey.asc -O- | sudo apt-key add -
+      wget -q https://repo.consortium.io/apt/debian/dists/precise/typesetr.gpg.key -O- | sudo apt-key add -
 
 	  sudo apt-get update
       sudo apt-get install typesetr-core typesetr-fonts typesetr-styles typesetr-texlive

@@ -7,8 +7,8 @@ The Hybrid Publishing Consortium is a project of the Hybrid Publishing Lab in co
 
 see: 
 
-(https://typesetr.consortium.io)
-(https://github.com/consortium/typesetr-converter)
+https://typesetr.consortium.io
+https://github.com/consortium/typesetr-converter
 
 Licenses:
 --------
@@ -70,20 +70,20 @@ jQuery
 Copyright 2005, 2014 jQuery Foundation and other contributors,
 https://jquery.org/
 
-(https://github.com/jquery/jquery/blob/master/LICENSE.txt)
+https://github.com/jquery/jquery/blob/master/LICENSE.txt
 
 jQuery Fracs
 ------------
 The MIT License (MIT)
 Copyright (c) 2014 Lars Jung (http://larsjung.de)
 
-(https://github.com/lrsjng/jquery-fracs)
+https://github.com/lrsjng/jquery-fracs
 
 jQuery-inline-footnotes
 -----------------------
 Copyright (c) 2011 Vesa Vänskä
 
-(https://github.com/vesan/jquery-inline-footnotes/blob/master/LICENSE)
+https://github.com/vesan/jquery-inline-footnotes/blob/master/LICENSE
 
 
 Prerequisites
@@ -126,7 +126,9 @@ Link to Readthedocs
 
 Support
 -------
-Zendesk
+Open up a ticket at zendesk 
+
+https://consortium1.zendesk.com/hc/en-gb
 
 
 

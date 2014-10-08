@@ -8,6 +8,7 @@ The Hybrid Publishing Consortium is a project of the Hybrid Publishing Lab in co
 see: 
 
 https://typesetr.consortium.io
+
 https://github.com/consortium/typesetr-converter
 
 Licenses:

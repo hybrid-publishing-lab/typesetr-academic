@@ -6,12 +6,11 @@ Typesetr Converter is the core conversion engine of the typesetr.consortium.io W
 The Hybrid Publishing Consortium is a project of the Hybrid Publishing Lab in collaboration with partners and associates. The Hybrid Publishing Lab is part of the Leuphana University of Lüneburg Innovation-Incubator, financed by the European Regional Development Fund and co-funded by the German federal state of Lower Saxony.
 
 see: 
-LINK
-LINK
+[Link](https://typesetr.consortium.io)
+[Link](https://github.com/consortium/typesetr-converter)
 
 Licenses:
 --------
-
 
 
 Typesetr-converter
@@ -61,7 +60,30 @@ Templates
 
     http://www.gnu.org/licenses/agpl-3.0.txt
 
+Fonts
 ------
+All fonts are copyright to their respective owners.
+
+jQuery
+------
+Copyright 2005, 2014 jQuery Foundation and other contributors,
+https://jquery.org/
+
+[Link](https://github.com/jquery/jquery/blob/master/LICENSE.txt)
+
+jQuery Fracs
+------------
+The MIT License (MIT)
+Copyright (c) 2014 Lars Jung (http://larsjung.de)
+
+[Link](https://github.com/lrsjng/jquery-fracs)
+
+jQuery-inline-footnotes
+-----------------------
+Copyright (c) 2011 Vesa Vänskä
+
+[Link](https://github.com/vesan/jquery-inline-footnotes/blob/master/LICENSE)
+
 
 Prerequisites
 -------------

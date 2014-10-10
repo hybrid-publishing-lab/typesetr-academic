@@ -1,0 +1,34 @@
+title:
+  supplied: "\u2018Superstition\u2019 in the Pidgeon"
+subtitle:
+  supplied: APA Article
+author:
+  supplied: B.F. Skinner
+  type: multiline
+affiliation:
+  supplied: Indiana University
+  type: multiline
+abstract:
+  supplied: A pigeon is brought to a stable state of hunger by reducing it to 75 percent
+    of its weight when well fed. It is put into an experimental cage for a few minutes
+    each day. A food hopper attached to the cage may be swung into place so that the
+    pigeon can eat from it. A solenoid and a timing relay hold the hopper in place
+    for five sec. at each reinforcement. If a clock is now arranged to present the
+    food hopper at regular intervals with no reference whatsoever to the bird's behavior,
+    operant conditioning usually takes place.The bird tends to learn whatever response
+    it is making when the hopper appears. The response may be extinguished and reconditioned.
+    The experiment might be said to demonstrate a sort of superstition. The bird behaves
+    as if there were a causal relation between its behavior and the presentation of
+    food, although such a relation is lacking. Journal of Experimental Psychology,
+    Vol 38(2), Apr 1948, 168-172.
+  type: rich-text
+lang:
+  canonical: en
+  label: Language
+  type: lang
+keywords:
+  canonical: ''
+bibliography:
+  canonical: ''
+  type: bibliography
+

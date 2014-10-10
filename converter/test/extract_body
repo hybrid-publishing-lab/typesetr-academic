@@ -1,0 +1,31 @@
+#!/usr/bin/env python
+import errno
+import sys
+
+from lxml import etree
+
+USAGE = """extract_html_body.py INPUT OUTPUT
+Extract the html body element from IN (stdin if -) into OUT (stdout if -)
+"""
+
+def main(args):
+    inf = sys.stdin
+    outf = sys.stdout
+    if args[0] != '-':
+        inf = open(args[0], 'r+')
+    if args[1] != '-':
+        outf = open(args[1], 'w+')
+    root = etree.parse(inf)
+    try:
+        print >> outf, etree.tostring(
+            root.find('{http://www.w3.org/1999/xhtml}body'),
+            encoding='UTF-8')
+    except IOError as e:
+        if e.errno != errno.EPIPE:
+            raise
+
+if __name__ == "__main__":
+    if len(sys.argv) < 3:
+        print USAGE
+        sys.exit(1)
+    main(sys.argv[1:])

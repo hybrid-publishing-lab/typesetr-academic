@@ -1,0 +1,49 @@
+title:
+  supplied: The document title
+subtitle:
+  supplied: with subtitle
+author:
+  supplied: Alexander Schmolck
+  type: multiline
+project:
+  supplied: typesetr
+client:
+  supplied: LShift
+version:
+  supplied: 1.3.0
+date:
+  supplied: today
+  type: date
+lang:
+  canonical: en
+  label: Language
+  type: lang
+section-numbering-depth:
+  canonical: '0'
+recipients:
+  canonical: ''
+abstract:
+  canonical: ''
+  type: rich-text
+bibliography:
+  canonical: ''
+  type: bibliography
+draft:
+  canonical: 'no'
+  type: boolean
+toc:
+  canonical: 'yes'
+  label: Table of contents
+  type: boolean
+keywords:
+  canonical: ''
+logo:
+  canonical: ''
+  type: image
+confidential:
+  canonical: 'no'
+  type: boolean
+bibliography-preamble:
+  canonical: ''
+  type: rich-text
+

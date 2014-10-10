@@ -1,0 +1,97 @@
+#!/usr/bin/env python
+#-*- encoding: utf-8 -*-
+# based on http://about.validator.nu/html5check.py
+
+
+import os
+import gzip
+import StringIO
+import sys
+
+from lxml import etree
+import requests
+
+
+BASE_URL = os.environ.get('TYPESETR_HTML5CHECK_BASE_URL',
+                          "http://validator.nu/?out=gnu")
+HEADERS = {'Content-Type': 'application/xhtml+xml',
+           'Accept-Encoding': 'gzip',
+           'Content-Encoding': 'gzip'}
+
+def span_with_non_phrasing_elements(s):
+    # Stupidly, html5 still has no generic element
+    # that can occur in all contexts; e.g. a `<p>` may not occur in a `<span>`
+    # and `<div>` not in a `<p>`. We use `<span>` throughout for content
+    # like footnotes that has no idiomatic html5 representation.
+    return u'not allowed as child of XHTML element “span”'.encode('utf-8') in s
+
+def accessibility_fascism(s):
+    return u'must have an “alt” attribute'.encode('utf8') in s
+
+def col_width_warning(s):
+    # we want this, because it's used in the latex-converter
+    return (u'The “width” attribute on the “col” '
+            u'element is obsolete'.encode('utf8')) in s
+
+def obsolete_anchors(s):
+    return (u' The “name” attribute is obsolete. Consider putting an “id” '
+            u'attribute on the nearest container instead').encode('utf8') in s
+
+def empty_title(s):
+    return u'Element “title” must not be empty.'.encode('utf-8') in s
+
+def section_lacks_heading(s):
+    # Our endnotes use a <section> containing <aside>s, but no heading, and
+    # neither do we want one.
+    return u'Section lacks heading'.encode('utf8') in s
+
+def purge(warnings, *preds):
+    return "\n".join(
+        line for line in warnings.split('\n')
+        if not any(pred(line) for pred in preds)).strip()
+
+
+def check_file(infile):
+    s = infile.read()
+    try:
+        etree.fromstring(s)
+    except etree.XMLSyntaxError as e:
+        print "Not valid XML:", e
+        return 1
+    buf = StringIO.StringIO()
+    gzipper = gzip.GzipFile(fileobj=buf, mode='wb')
+    gzipper.write(s)
+    gzipper.close()
+    gzdata = buf.getvalue()
+    buf.close()
+
+    resp = requests.post(BASE_URL, data=gzdata, headers=HEADERS)
+    relevant_output = purge(resp.content,
+                            accessibility_fascism,
+                            obsolete_anchors,
+                            span_with_non_phrasing_elements,
+                            empty_title,
+                            col_width_warning,
+                            section_lacks_heading)
+    if relevant_output:
+        if not resp.ok:
+            print >> sys.stderr, (
+                "ERROR: Got %d from validation service." % resp.status_code)
+        print relevant_output
+        return 1 + resp.ok # 1 = validation failed; 2 = validator failed
+    return 0
+
+
+def main(args):
+    infile = sys.stdin
+    should_close = False
+    if args and args[0] != '-':
+        should_close = True
+        infile = open(args[0], 'rb')
+    status = check_file(infile)
+    if should_close:
+        infile.close()
+    return status
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv[1:]))

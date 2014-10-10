@@ -1,0 +1,27 @@
+title:
+  supplied: Depth psychological conditioning with pseudo-oedipal stimuli
+author:
+  supplied: B.F Freud; Sigmund Skinner
+  type: multiline
+abstract:
+  supplied: This is a typesetr example article for an academic template. You are currently
+    reading the abstract. All this text is just there to make the abstract long enough;
+    it does not provide any actual information. If you read this far, you should probably
+    stop now. Really.
+  type: rich-text
+affiliation:
+  supplied: Department of Psychology, University of Harvard; William James Hall; 33
+    Kirkland Street; Cambridge, MA 02138
+  type: multiline
+bibliography:
+  supplied: <a href="https://zotero.org/groups/199597/items">lshift-public</a>
+  type: bibliography
+lang:
+  canonical: en
+  label: Language
+  type: lang
+subtitle:
+  canonical: ''
+keywords:
+  canonical: ''
+

@@ -1,0 +1,26 @@
+title:
+  supplied: Informationtheoretic applications of test article creation
+author:
+  supplied: Claude Shannon
+thanks:
+  supplied: MIT
+notice:
+  supplied: invited paper
+abstract:
+  supplied: American<span style="color:#333333"><i> </i>Informationtheory has seen
+    many <sup>super</sup><b>bold</b> applications, whereas <i>Italian</i> information
+    theory has been <sub>sub</sub>standard. The </span><span style="color:#ff0000">Reds</span>
+    also had Kolmogorov and a few other greats, small budgets notwithstanding.
+  type: rich-text
+keywords:
+  supplied: entropy, information
+bibliography:
+  supplied: <a href="http://zotero.org/groups/199597">lshift-public</a>
+  type: bibliography
+lang:
+  canonical: en
+  label: Language
+  type: lang
+subtitle:
+  canonical: ''
+

@@ -1,0 +1,49 @@
+lang:
+  canonical: en
+  label: Language
+  type: lang
+section-numbering-depth:
+  canonical: '0'
+subtitle:
+  canonical: ''
+version:
+  canonical: ''
+recipients:
+  canonical: ''
+author:
+  canonical: ''
+  type: multiline
+abstract:
+  canonical: ''
+  type: rich-text
+title:
+  canonical: ''
+bibliography:
+  canonical: ''
+  type: bibliography
+project:
+  canonical: ''
+date:
+  canonical: today
+  type: date
+client:
+  canonical: ''
+draft:
+  canonical: 'no'
+  type: boolean
+toc:
+  canonical: 'yes'
+  label: Table of contents
+  type: boolean
+keywords:
+  canonical: ''
+logo:
+  canonical: ''
+  type: image
+confidential:
+  canonical: 'no'
+  type: boolean
+bibliography-preamble:
+  canonical: ''
+  type: rich-text
+

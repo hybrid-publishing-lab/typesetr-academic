@@ -1,0 +1,49 @@
+title:
+  supplied: Test Pitch
+subtitle:
+  supplied: A test pitch for previews
+client:
+  supplied: Internal Testing
+project:
+  supplied: Typesetr
+author:
+  supplied: The Author
+  type: multiline
+recipients:
+  supplied: Recipients
+version:
+  supplied: 0.0.0
+date:
+  supplied: '2012-07-18'
+  type: date
+lang:
+  canonical: en
+  label: Language
+  type: lang
+section-numbering-depth:
+  canonical: '0'
+abstract:
+  canonical: ''
+  type: rich-text
+bibliography:
+  canonical: ''
+  type: bibliography
+draft:
+  canonical: 'no'
+  type: boolean
+toc:
+  canonical: 'yes'
+  label: Table of contents
+  type: boolean
+keywords:
+  canonical: ''
+logo:
+  canonical: ''
+  type: image
+confidential:
+  canonical: 'no'
+  type: boolean
+bibliography-preamble:
+  canonical: ''
+  type: rich-text
+

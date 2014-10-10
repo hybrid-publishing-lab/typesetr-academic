@@ -1,0 +1,95 @@
+-*- mode: rst ;encoding: utf-8 -*-
+>>> from pprint import pprint as pp
+>>> from converter.html_parser import parse_chunk, parse_html
+>>> from converter.postprocess import space_normalize
+
+>>> pp(space_normalize(parse_chunk(u'''American
+... <span style="color:#333333">
+...   Informationtheory has seen many
+...   <sup>
+...     super
+...   </sup>
+...   <b>
+...     bold
+...   </b>
+...    applications, whereas
+...   <i>
+...     Italian
+...   </i>
+...    information theory has been
+...   <sub>
+...     sub
+...   </sub>
+...   standard. The
+... </span>
+... <span style="color: #f00">
+...   Reds
+... </span>
+...  also had Kolmogorov<span class="footnote">a complexity theorist</span>
+...  and a few other greats, small budgets notwithstanding.
+... ''')))
+['American ',
+ ('span',
+  {'style': OrderedDict([('color', '#333333')])},
+  ['Informationtheory has seen many ',
+   ('sup', {}, ['super ']),
+   ('b', {}, ['bold ']),
+   'applications, whereas ',
+   ('i', {}, ['Italian ']),
+   'information theory has been ',
+   ('sub', {}, ['sub ']),
+   'standard. The ']),
+ ('span', {'style': OrderedDict([('color', '#ff0000')])}, ['Reds ']),
+ 'also had Kolmogorov',
+ ('.footnote', {}, ['a complexity theorist']),
+ ' and a few other greats, small budgets notwithstanding. ']
+
+
+Whitespace normalization
+------------------------
+FIXME(alexander): I really need to think about how this should actually
+behave; this is more a documentation of existing behavior than a spec.
+
+>>> pp(space_normalize(parse_chunk('<div><span><i> </i></span></div>')))
+[('div', {}, [('span', {}, [('i', {}, [])])])]
+>>> pp(space_normalize(parse_chunk('<div><span>a<i> </i>b</span></div>')))
+[('div', {}, [('span', {}, ['a', ('i', {}, [' ']), 'b'])])]
+
+``<img>`` and ``<figure>`` normalization
+----------------------------------------
+If we get a figure with display and width set, do nothing:
+>>> pp(parse_chunk('<figure style="width:75%; display: block"><img src="foo.jpg"></img></figure>'))
+[('figure',
+  {'style': OrderedDict([('display', 'block'), ('width', '75%')])},
+  [('img', {'src': 'foo.jpg'}, [])])]
+
+If all we get is an image, wrap a figure around it, and lift the width, if any:
+>>> pp(parse_chunk('<p><img src="foo.jpg" style="width: 10%"></img></p>'))
+[('p',
+  {},
+  [('figure',
+    {'style': OrderedDict([('display', 'inline'), ('width', '10%')])},
+    [('img', {'src': 'foo.jpg'}, [])])])]
+
+If we get a figure with missing properties, augment it
+>>> pp(parse_chunk('<figure><img src="foo.jpg"></img></figure>'))
+[('figure',
+  {'style': OrderedDict([('display', 'block'), ('width', '100%')])},
+  [('img', {'src': 'foo.jpg'}, [])])]
+
+FIXME(alexander): should also throw away empty figures etc.
+
+Encoding
+--------
+
+Lxml does not like `<meta charset=...>` very much.
+
+>>> s = '''<html>
+...   <head>
+...     <title>Sk\xc3\xa5l!</title>
+...     <meta charset="utf-8">
+...   </head>
+...   <body></body>
+... </html>'''
+>>> pp(parse_html(s).find('.//title').text)
+u'Sk\xe5l!'

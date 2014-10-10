@@ -1,0 +1,52 @@
+#!/usr/bin/env python
+#-*- file-encoding: utf-8 -*-
+# pylint: disable=C0103
+
+# Copyright (C) 2014  LShift Ltd
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+# You should have received a copy of the GNU Affero General Public License along
+# with this program. If not, see <http://www.gnu.org/licenses/>.
+# http://www.gnu.org/licenses/agpl-3.0.txt
+
+import errno
+import logging as log
+import os
+import signal
+import socket
+
+from converter import gdoc_converter
+
+def kill_children(signum, _):
+    # unset handler, so that we don't get an infinite loop
+    # especially with SIGTERM
+    signal.signal(signum, signal.SIG_DFL)
+
+    SIGNALS_TO_NAMES_DICT = dict(
+        (getattr(signal, n), n)
+        for n in dir(signal) if n.startswith('SIG') and '_' not in n)
+    log.warning("%s received", SIGNALS_TO_NAMES_DICT[signum])
+    log.warning('Aborting, and killing children processes...')
+    os.killpg(os.getpgid(0), signal.SIGTERM)
+
+def main():
+    # set signal handler to kill all children on abort or keyboard interrupt
+    signal.signal(signal.SIGABRT, kill_children)
+    signal.signal(signal.SIGINT, kill_children)
+    signal.signal(signal.SIGTERM, kill_children)
+    try:
+        gdoc_converter.main()
+    except socket.error, e:
+        raise
+    except IOError, e:
+        if e.errno != errno.EPIPE:
+            raise
+
+if __name__ == '__main__':
+    main()

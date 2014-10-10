@@ -1,0 +1,23 @@
+title:
+  supplied: 'Ultra-extreme programming: contortionist-level agility'
+short-title:
+  supplied: Ultra-extreme programming
+author:
+  supplied: A. Bender
+affiliation:
+  supplied: The University of X
+abstract:
+  supplied: This is just an example article for the Lecture notes in Business Information
+    Processing.
+  type: rich-text
+keywords:
+  supplied: agile, XP, software development
+bibliography:
+  supplied: '<a href="http://zotero.org/groups/199597/items">Group lshift-public:
+    Library</a>'
+  type: bibliography
+lang:
+  canonical: en
+  label: Language
+  type: lang
+

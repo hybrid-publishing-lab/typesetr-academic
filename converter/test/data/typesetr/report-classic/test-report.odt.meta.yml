@@ -1,0 +1,26 @@
+title:
+  supplied: A highly interesting report
+subtitle:
+  supplied: with a subtitle
+author:
+  supplied: Joe Reporter
+version:
+  supplied: '1.0'
+date:
+  supplied: today
+  type: date
+abstract:
+  supplied: The chief purpose of this report is to serve as a test document.
+  type: rich-text
+lang:
+  canonical: en
+  label: Language
+  type: lang
+bibliography:
+  canonical: ''
+  type: bibliography
+toc:
+  canonical: 'no'
+  label: Table of contents
+  type: boolean
+

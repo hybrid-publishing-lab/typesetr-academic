@@ -1,0 +1,34 @@
+#!/bin/bash
+set -eu
+#don't return "X/*" for empty directories
+shopt -s nullglob
+testroot=`dirname "$0"`
+root=$testroot/../..
+
+main(){
+    files=("small" "normal" "large" "huge")
+    for word in ${files[*]}; do
+        for ((i=1; i<=10; i++))
+            do
+            echo testing small sized document
+            start=$(date +%s)
+            gdoc-to pdf "$root"/converter/test/benchmark_files/"$word".odt > /dev/null
+            end=$(date +%s)
+            timetaken=$(($end-$start))
+            case "$word" in
+            "small") small[i]=$timetaken;;
+            "normal") normal[i]=$timetaken;;
+            "large") large[i]=$timetaken;;
+            "huge") huge[i]=$timetaken;;
+            esac
+       done
+    done
+
+    echo Time taken in secs
+    echo Small\(4 pg\) Documents : ${small[*]}
+    echo Normal\(7 pg\)  Documents : ${normal[*]}
+    echo Large\(50 pg\) Documents : ${large[*]}
+    echo Huge\(100 pg\) Documents : ${huge[*]}
+}
+
+main

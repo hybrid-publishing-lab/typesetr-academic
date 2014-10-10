@@ -1,0 +1,737 @@
+<?xml version="1.0"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="typesetr" />
+  <script src="https://c328740.ssl.cf1.rackcdn.com/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+  </script>
+  <title>The document title</title>
+  <link href="css/pygments.css" rel="stylesheet"/><link href="css/stylesheet.css" rel="stylesheet"/>
+</head>
+<body class="tex2jax_ignore">
+<h1 class="title">The document title</h1>
+<h2 class="subtitle">with subtitle</h2>
+<dl id="document-properties">
+  <dt class="author">Author</dt>
+  <dd class="author">Alexander Schmolck</dd>
+  <dt class="project">Project</dt>
+  <dd class="project">typesetr</dd>
+  <dt class="client">Client</dt>
+  <dd class="client">LShift</dd>
+  <dt class="version">Version</dt>
+  <dd class="version">1.3.0</dd>
+  <dt class="date">Date</dt>
+  <dd class="date" data-value="today">TODAYS_DATE</dd>
+</dl>
+<h1><a name="id.1fob9te"></a>This is a level 1 heading with comment<a class="noteref" href="#id.1fob9te-fn1">1</a></h1>
+<p>A paragraph (with {braces}, and lots of punctuation: !"#$%&amp;\'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~).</p>
+<p>Another paragraph.</p>
+<p class="center">A centered paragraph</p>
+<p class="right">A right justified paragraph</p>
+<p class="justify">A block paragraph.</p>
+<blockquote>
+  <p><i>An indented paragraph in italic, with</i></p>
+  <ol>
+    <li>
+      <p class="justify"><i>a</i></p>
+    </li>
+    <li>
+      <p class="justify"><i>list</i></p>
+    </li>
+  </ol>
+</blockquote>
+<p class="justify">Some identation by 3 spaces, two spaces after the preceding comma</p>
+<p class="justify">Indentation by tab, followed by 2 trailing tabs</p>
+<p class="justify">blah</p>
+<p class="justify">Indentation on its own means blockquote:</p>
+<blockquote>
+  <p>The son of a father to whom history will accord certain attenuating circumstances, but also as worthy of esteem as that father had been of blame; possessing all private virtues and many public virtues; careful of his health, of his fortune, of his person, of his affairs, knowing the value of a minute and not always the value of a year; sober, serene, peaceable, patient; a good man and a good prince; sleeping with his wife, and having in his palace lackeys charged with the duty of showing the conjugal bed to the bourgeois, an ostentation of the regular sleeping-apartment which had become useful after the former illegitimate displays of the elder branch; knowing all the languages of Europe, and, what is more rare, all the languages of all interests, and speaking them; an admirable representative of the “middle class,” but outstripping it, and in every way greater than it; possessing excellent sense, while appreciating the blood from which he had sprung, counting most of all on his intrinsic worth, and, on the question of his race, very particular, declaring himself Orleans and not Bourbon; thoroughly the first Prince of the Blood Royal while he was still only a Serene Highness,[...]</p>
+  <footer><cite>Victor Hugo, <i>Les Miserables</i> (cut short, mid-sentence)</cite></footer>
+</blockquote>
+<p class="justify">Indented <code>monospaced</code> text means code (styling is ignored, note how half the code below is styled and half isn’t):</p>
+
+<pre><span class="k">def</span> <span class="nf">_pred_repr</span><span class="p">(</span><span class="n">pred</span><span class="p">,</span> <span class="n">pargs</span><span class="p">,</span> <span class="n">pkwargs</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">pred</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s">&#39;&#39;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">myrepr</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">__name__</span> <span class="k">if</span> <span class="nb">hasattr</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="s">&#39;__name__&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="nb">repr</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">f</span> <span class="o">=</span> <span class="n">myrepr</span><span class="p">(</span><span class="n">pred</span><span class="p">)</span>
+        <span class="n">args</span> <span class="o">=</span> <span class="nb">map</span><span class="p">(</span><span class="n">myrepr</span><span class="p">,</span> <span class="n">pargs</span><span class="p">)</span>
+        <span class="n">kwargs</span> <span class="o">=</span> <span class="p">[</span><span class="s">&quot;</span><span class="si">%s</span><span class="s">=</span><span class="si">%r</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">myrepr</span><span class="p">(</span><span class="n">v</span><span class="p">))</span> <span class="k">for</span> <span class="p">(</span><span class="n">k</span><span class="p">,</span> <span class="n">v</span><span class="p">)</span> <span class="ow">in</span> <span class="n">pkwargs</span><span class="o">.</span><span class="n">values</span><span class="p">()]</span>
+        <span class="k">return</span> <span class="s">&quot;(</span><span class="si">%s</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="s">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">([</span><span class="n">f</span><span class="p">]</span> <span class="o">+</span> <span class="n">args</span> <span class="o">+</span> <span class="n">kwargs</span><span class="p">)</span>
+</pre>
+
+<p><a name="id.3znysh7"></a>There should probably also be a way to have code captions...</p>
+<h2><a name="id.2et92p0"></a>A level 2 heading (bookmarked), with url <a href="https://google.com">https://google.com</a></h2>
+<p>Some nasty long urls like <a href="https://github.com/lshift/cloverage/commit/9318ea9fa081044b00de0f214a6fc63d5105eab2">https://github.com/lshift/cloverage/commit/9318ea9fa081044b00de0f214a6fc63d5105eab2</a> in the body, here is a shorter one, but a bit weird: <a href="http://en.wikipedia.org/wiki/PC_Tools_(Central_Point_Software)">http://en.wikipedia.org/wiki/PC_Tools_(Central_Point_Software)</a>, because wikipedia thinks urls with parens <a href="http://example.com/frag;query?param=%257D&amp;anotherParam=%5Bblah%5D&amp;oneMore=(æäae)&amp;chars=(x%5B$%257B'/foo%257C%255E2_3-'%257D%5D@)#!fräg">http://Example.com/frag;query?param=}&amp;anotherParam=[blah]&amp;oneMore=(æäae)&amp;chars=(x[${'\foo|^2_3-'}]@)#!fräg</a> are a fine idea. Some balanced parens: <a href="http://example.com/%7Bbalanced%7D">http://example.com/{balanced}</a></p>
+<h3><a name="id.tyjcwt"></a>A level 3 heading (also bookmarked),with drawing inside<img class="margin" src="4868ec1330d78a5c51fda03602261452.png" style="width:24.24%"/></h3>
+<h5><a name="id.3dy6vkm"></a>A level 5 heading with <code>monospace</code> and italics</h5>
+<h6><a name="id.1t3h5sf"></a>A level 6 heading</h6>
+<p><b>bold tex. </b><i>Italic text. <b>Bold italic text. </b></i><s>Strikethru.</s></p>
+<p>Italic correction test: <i>half</i>hearted <b>half</b>hearted <i>half</i><b>hearted</b></p>
+<p>multi-para italics: <i>italics before the break</i></p>
+<p><sup><i>italics after the break</i></sup></p>
+<p>Red background <span style="color:#00ff00">green</span> text.<sub>subscripted</sub>and<sup>superscripted</sup>. Finally, a Footnote<a class="noteref" href="#id.1fob9te-fn2">2</a>.</p>
+<ol>
+  <li>A numbered list, first item</li>
+  <li>A numbered list, second item</li>
+  <li>A numbered list, third item, with a subnumbered list:
+    <ol>
+      <li>A numbered sublist, first item</li>
+      <li>A numbered sublist, second item (with 2 random spaces: ‘ ‘)</li>
+      <li><a name="id.4d34og8"></a>A bulleted subitem
+        <ul>
+          <li>a sub-bullet
+            <ul>
+              <li>a sub-sub-bullet
+                <ul>
+                  <li>a sub-sub-sub bullet</li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+  <li>A toplevel numbered list
+    <ol>
+      <li>A numbered list following below it</li>
+    </ol>
+  </li>
+  <li>This is a new numbered list -- why I do not know</li>
+  <li>This is new numbered list because I told it to renumber, starting at 10</li>
+  <li>Item number 11, out of 2 (or 3)?</li>
+</ol>
+<ol>
+  <li>A new list alternating between bullets and numbers without renumbering
+    <ul>
+      <li>bullet switch1
+        <ol>
+          <li>number switch1
+            <ul>
+              <li>bullet switch2
+                <ol>
+                  <li>number switch2</li>
+                </ol>
+              </li>
+            </ul>
+          </li>
+        </ol>
+      </li>
+    </ul>
+  </li>
+</ol>
+<p class="center"><a href="http://www.google.com?q=frob&amp;ie=UTF8">A partly <b>bold </b>link to google</a>.<img class="margin" src="a7b9be5b44c1fa3e38a77422ade5e43b.png" style="width:36.36%"/>the preceding picture is inline.</p>
+<figure style="display:block"><img src="a7b9be5b44c1fa3e38a77422ade5e43b.png" style="width:36.36%"/>
+  <figcaption>The preceding picture has fixed position.</figcaption>
+</figure>
+<p>It’s also possible to have drawings (which can contain links):</p>
+<figure style="display:block"><img src="85681a0689a783b1250c45a0ae28160a.png" style="width:18.18%"/></figure>
+<p>Also, an empty caption means the figure will still receive a label (but no label/text separator like :):</p>
+<figure style="display:block"><img src="85681a0689a783b1250c45a0ae28160a.png" style="width:18.18%"/>
+  <figcaption></figcaption>
+</figure>
+<p><a href="#id.3znysh7">A link to heading 2 </a><a href="#id.4d34og8">A link to a bookmarked sub-bullet H</a><a href="#id.2s8eyo1">ey it seems possible to reference formulas! </a><a href="#id.17dp8vu">but not tables?</a></p>
+<p><code>Some courier text. </code>Times new 𝝰 Roman text. Arial Text. Tahoma 14pt, now <i>italic.</i> Corsiva for quotations?, although I wonder what it looks in <i>italic</i> -- hmm weird, but <i><b>bold italic </b></i>is even worse.</p>
+<p>Sycopante is dusgusting but <i>even</i> worse in <b>bold </b><i><b>italic.</b></i></p>
+<p><code>consolas looks pretty <b>OK</b> for monotype. </code>Some 14 Pt Georgia.</p>
+<p><a name="id.2s8eyo1"></a>A formula:<img class="margin" src="4dbde1a17da2ad3f19b52b51f7ec0215.png" style="width:30.3%"/></p>
+<p>This is an inline math formula:<span class="tex2jax_process">\(\sum_{i=0}^N\sqrt{2\pi\sigma^2}\exp(\frac{(x_i-\mu)^2}{\sigma^2})\)</span> (should look as the picture above).</p>
+<p>2 lines with larger linespacing:</p>
+<p>1.15</p>
+<p>1.5</p>
+<p>2</p>
+<p>A paragraph with space after it.</p>
+<p>A paragraph with space before it.</p>
+<table>
+  <caption>A very simple and plain table that takes only a small part of the page.</caption>
+  <colgroup><col width="51.7799352751%"/><col width="48.2200647249%"/></colgroup>
+  <tr>
+    <td>
+      <p><a name="id.17dp8vu"></a>A</p>
+    </td>
+    <td>
+      <p>plain</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p>2x2</p>
+    </td>
+    <td>
+      <p>table</p>
+    </td>
+  </tr>
+</table>
+<h2><a name="id.3rdcrjn"></a>MŨĻŤĮŁÄŃĜŮĂĢȄ</h2>
+<p>Ŵëśțêřñ | Çèņŧŕåľ Êûřȍpĕ | Қӥрӣллӥцӓ + Àşîãń | Ţúřķïšħ | Båĺťįč | <span style="color:#252525">ελληνική</span></p>
+<h3><a name="id.26in1rg"></a>Punctuation</h3>
+<p>"Nerds like 'straight' quotation marks!"</p>
+<p>“Doing ‘inner quotations’ American style”.</p>
+<p>„Deutsche Anführungszeichen, auch ‚Gänsefüßchen‘ gennant.“</p>
+<p>”Lainausmerkit”</p>
+<p>«Swiss French ‹Guillemets›».</p>
+<p>— the em dash […] is much less fussy than quotation marks, writes Bringhurst.</p>
+<h4><a name="id.lnxbz9"></a>Dashes, hyphens and minuses</h4>
+<p>Ranges should use en-dashes like so: 25–30mm.</p>
+<p>Negative numbers hould use a minus sign: −3 not a hyphen: -3.</p>
+<p>Wikipedia either suggests:</p>
+<p>[Em dash:] A flock of sparrows—some of them juveniles—alighted and sang.</p>
+<p>[En dash:] A flock of sparrows – some of them juveniles – alighted and sang.</p>
+<h3><a name="id.35nkun2"></a>Latin-1 (apart from the Ō)</h3>
+<p>Not everything can be expressed in $s and ¢s, never mind English £s and</p>
+<p>Japanese ¥, or indeed other ¤. Some ¦s have holes, some |s don't. All these §s</p>
+<p>and ¶s are © by me. Acme®. «1ªdonna nº1». 2b or ¬2b. A few µs after a good sneeze</p>
+<p>ÇÜŌÁ becomes CUOA¸¨¯´. ¼ ± ½x² + ¾x³ = y is a polynomial. 3*4 is ugly, but either 3·4 or 3×4 are fine. However, 3/4 is preferable to 3÷4. He made a 180° turn. ¿Por qué dices eso?</p>
+<p>¡Qué va!</p>
+<p>ÀÁÂÃÄÅÆ Ç E:ÈÉÊË ÌÍÎÏ Ð Ñ ÒÓÔÕÖØ ÙÚÛÜ Ý Þß</p>
+<p>àáâãäåæ ç èéêë ìíîï ð ñ òóôõöø ùúûü ýÿ þ</p>
+<p><b>Other languages</b></p>
+<p>Hàn Thế Thành would know the Ý under the name Ý Đại Lợi.</p>
+<p>Not in Latin1: <a href="http://en.wikipedia.org/wiki/%C3%98">Ǿ</a>, ǿ, <a href="http://en.wikipedia.org/wiki/%C5%B8">Ÿ</a>,<a href="http://en.wikipedia.org/wiki/%C5%92">Œ</a>,<a href="http://en.wikipedia.org/wiki/%C5%A0">Š</a>, š, <a href="http://en.wikipedia.org/wiki/%C5%BD">Ž</a>, ž,<a href="http://en.wikipedia.org/wiki/%C5%90">Ő</a>, ő, <a href="http://en.wikipedia.org/wiki/%C5%B0">Ű</a>, ű,Ḃ, ḃ, Ċ, ċ, Ḋ, ḋ, Ḟ, ḟ, Ġ, ġ, Ṁ, ṁ, Ṡ, ṡ, Ṫ, ṫ,<a href="http://en.wikipedia.org/wiki/%C4%80">Ā</a>, ā, <a href="http://en.wikipedia.org/wiki/%C4%92">Ē</a>, ē, <a href="http://en.wikipedia.org/wiki/%C4%AA">Ī</a>, ī, <a href="http://en.wikipedia.org/wiki/%C5%8C">Ō</a>, ō,<a href="http://en.wikipedia.org/wiki/%C5%AA">Ū</a>, ū,<a href="http://en.wikipedia.org/wiki/%C4%80">Ā</a>, ā, <a href="http://en.wikipedia.org/wiki/%C4%92">Ē</a>, ē, <a href="http://en.wikipedia.org/wiki/%C4%AA">Ī</a>, ī, <a href="http://en.wikipedia.org/wiki/%C5%8C">Ō</a>, ō,<a href="http://en.wikipedia.org/wiki/%C5%AA">Ū</a>, ū,<a href="http://en.wikipedia.org/wiki/%C5%B4">Ŵ</a>, ŵ, <a href="http://en.wikipedia.org/wiki/%C5%B6">Ŷ</a>, ŷ</p>
+<p style="color:#252525">Greek: Ζαφείρι δέξου πάγκαλο, βαθῶν ψυχῆς τὸ σῆμα.</p>
+<p>Russian: Эх, чужак, общий съём цен шляп (юфть) – вдрызг!</p>
+<p>Ukrainian: Жебракують філософи при ґанку церкви в Гадячі, ще й шатро їхнє п'яне знаємо.</p>
+<p style="color:#252525">صِف خَلقَ خَودِ كَمِثلِ الشَمسِ إِذ بَزَغَت — يَحظى الضَجيعُ بِها نَجلاءَ مِعطارِ</p>
+<p>„Grüß الله（akaﷲ)!” – 【本当のバイエルン語じゃない)</p>
+<p>「简体字」≠『簡體字』</p>
+<p>〈Ａ〉、《Ｂ》。〔Ｃ〕‥ ｛Ｄ｝…（Ｅ）！［Ｆ〜Ｇ］？｟5時〜6時｠〒“〃＄″‘한’ ※ヽ〽</p>
+<p>≠</p>
+<p>〈A〉,⟪B⟫.⟬C⟭..{D}̣̣̣…(E)![F~G]?⸨5~6⸩</p>
+<p>a☔😃</p>
+<p>a hline</p>
+<p>Some code samples</p>
+<p><code># fork bomb</code></p>
+<p><code>:(){ :|:&amp; };:</code></p>
+<p>Some crap that should get culled</p>
+<p>above there are lotsa empty paragraphs</p>
+<section class="endnotes">
+  <aside class="endnote" id="id.1fob9te-fn1">And a footnote.</aside>
+  <aside class="endnote" id="id.1fob9te-fn2">
+    <p>Some Footnote text! With <b>bold, </b><i><b>italic,</b></i> a raw url <a href="http://www.lshift.net">http://www.lshift.net</a> and weird symbols: Ω≈.</p>
+    <p>Also, this Footnote has two paragraphs!</p>
+  </aside>
+</section>
+<h1><a name="id.1ksv4uv"></a>This heading has no anchor</h1>
+<p><sub>above there is an empty heading</sub></p>
+<p>URLs with hashes in them</p>
+<p><a href="http://www.google.com#test%20problematic%7Bchars%7D">Innocent looking failure text.</a><a class="noteref" href="#id.1ksv4uv-fn1">1</a><a name="id.2jxsxqh"></a></p>
+<h1 class="title"><a name="id.z337ya"></a>Images without DPI Information</h1>
+<figure style="display:block"><img src="0101f2ee35357038ddad88fbbe541383.jpg" style="width:93.94%"/></figure>
+<div class="pagebreak"></div>
+<section class="endnotes">
+  <aside class="endnote" id="id.1ksv4uv-fn1"><a href="http://www.lshift.net#test%202">One more for the road!</a></aside>
+</section>
+<h1><a name="id.1y810tw"></a>List Test</h1>
+<ol>
+  <li>1
+    <ol>
+      <li>a
+        <ol>
+          <li>i
+            <ol>
+              <li>11
+                <ol>
+                  <li>aa
+                    <ol>
+                      <li>ii
+                        <ol>
+                          <li>111
+                            <ol>
+                              <li>aaa
+                                <ol>
+                                  <li>iii</li>
+                                </ol>
+                              </li>
+                              <li>bbb</li>
+                            </ol>
+                          </li>
+                          <li>222</li>
+                        </ol>
+                      </li>
+                      <li>ii.ii</li>
+                    </ol>
+                  </li>
+                  <li>bb</li>
+                </ol>
+              </li>
+              <li>22</li>
+            </ol>
+          </li>
+          <li>ii</li>
+        </ol>
+      </li>
+      <li>b</li>
+    </ol>
+  </li>
+  <li>2</li>
+</ol>
+<ul>
+  <li>*
+    <ul>
+      <li>o
+        <ul>
+          <li>[]
+            <ul>
+              <li>**
+                <ul>
+                  <li>oo
+                    <ul>
+                      <li>[][]
+                        <ul>
+                          <li>***
+                            <ul>
+                              <li>ooo
+                                <ul>
+                                  <li>[][][]</li>
+                                </ul>
+                              </li>
+                              <li>ooo</li>
+                            </ul>
+                          </li>
+                          <li>***</li>
+                        </ul>
+                      </li>
+                      <li>[][]</li>
+                    </ul>
+                  </li>
+                  <li>oo</li>
+                </ul>
+              </li>
+              <li>**</li>
+            </ul>
+          </li>
+          <li>[]</li>
+        </ul>
+      </li>
+      <li>2o</li>
+    </ul>
+  </li>
+  <li>*</li>
+</ul>
+<ul class="square">
+  <li>[]
+    <ul class="disc">
+      <li>*
+        <ul class="circle">
+          <li>o</li>
+          <li>o</li>
+        </ul>
+      </li>
+      <li>*</li>
+    </ul>
+  </li>
+  <li>[]</li>
+</ul>
+<ol class="upper-alpha">
+  <li>A
+    <ol class="upper-roman">
+      <li>I</li>
+      <li>II</li>
+    </ol>
+  </li>
+  <li>B</li>
+</ol>
+<ol>
+  <li>TopLevelNumbered
+    <ol>
+      <li><b>bold</b> subnumbered</li>
+      <li><i>italic subnumbered</i>
+        <ul>
+          <li>bulletSublist</li>
+        </ul>
+      </li>
+      <li>c subnumbered</li>
+    </ol>
+  </li>
+  <li>2ndTopLevelNumbered
+    <ol>
+      <li>aSublist</li>
+      <li>bSublistBeforeEmpty</li>
+      <li>aRenumberedSublist
+        <ul>
+          <li>subsubBullet
+            <ol>
+              <li>subsubsubNumber
+                <ul>
+                  <li>subsubsubsubBullet1
+                    <ol>
+                      <li>sixthlevel
+                        <ol>
+                          <li>7thlevel
+                            <ol>
+                              <li>8thlevel
+                                <ol>
+                                  <li>9thlevel</li>
+                                </ol>
+                              </li>
+                            </ol>
+                          </li>
+                        </ol>
+                      </li>
+                    </ol>
+                  </li>
+                  <li>subsubsubsubBullet2FollowedByEmtpy</li>
+                </ul>
+              </li>
+            </ol>
+          </li>
+          <li>subsubBullet2
+            <ol>
+              <li>Next1subsubNumber</li>
+            </ol>
+          </li>
+          <li>subsubBullet3</li>
+        </ul>
+      </li>
+    </ol>
+  </li>
+</ol>
+<ul>
+  <li>TopLevelBullet
+    <ol>
+      <li>aSubList</li>
+    </ol>
+    <ol class="decimal">
+      <li>1renumberedSubList</li>
+      <li>10renumberedSublist</li>
+      <li>11SublistFollowedBySubsubsubBullet</li>
+    </ol>
+  </li>
+</ul>
+<blockquote>
+  <blockquote>
+    <blockquote>
+      <blockquote>
+        <ul>
+          <li>This does not render properly right now</li>
+        </ul>
+      </blockquote>
+    </blockquote>
+  </blockquote>
+</blockquote>
+<h1><a name="id.4i7ojhp"></a>Table test</h1>
+<h2><a name="id.2xcytpi"></a>In-depth tests of various table features</h2>
+<p>A totally minimal table:</p>
+<table>
+  <caption>table numero uno</caption>
+  <colgroup><col width="100.0%"/></colgroup>
+  <tr>
+    <td>
+      <p>This is a table consisting of a single cell.</p>
+    </td>
+  </tr>
+</table>
+<table>
+  <caption>A table <i>caption with some <b>bold italic </b>but mostly italic </i>text. And a Footnote<a class="noteref" href="#id.4i7ojhp-fn1">1</a>. It should be #2.</caption>
+  <colgroup><col width="20.434298441%"/><col width="16.5924276169%"/><col class="center" width="22.6057906459%"/><col class="right" width="18.429844098%"/><col class="justify" width="21.9376391982%"/></colgroup>
+  <tr>
+    <th class="headcol"></th>
+    <th style="background-color:#00FFFF">
+      <p><b>Left Column</b></p>
+    </th>
+    <th class="center" style="background-color:#00FFFF">
+      <p class="center" style="color:#ffff00"><b>Centered Column</b></p>
+    </th>
+    <th class="right" style="background-color:#00FFFF">
+      <p class="right"><b>Right Column</b></p>
+    </th>
+    <th class="justify" style="background-color:#00FFFF">
+      <p class="justify"><b>Justified Column</b></p>
+    </th>
+  </tr>
+  <tr>
+    <td class="headcol" style="background-color:#00FFFF">
+      <p><b>Heading Column</b></p>
+    </td>
+    <td>
+      <p>left</p>
+    </td>
+    <td class="center">
+      <p>center</p>
+    </td>
+    <td class="right">
+      <p>right</p>
+    </td>
+    <td class="justify">
+      <p class="justify">just</p>
+    </td>
+  </tr>
+  <tr>
+    <td class="headcol" style="background-color:#00FFFF">
+      <p><b>2nd Heading Column</b></p>
+    </td>
+    <td>
+      <p>leftsmall</p>
+    </td>
+    <td class="center">
+      <p><i>centersmallitalic</i></p>
+    </td>
+    <td class="right">
+      <p><b>rightbold</b></p>
+    </td>
+    <td class="justify">
+      <p class="justify">just small</p>
+    </td>
+  </tr>
+</table>
+<table>
+  <caption>this is a nested table.</caption>
+  <colgroup><col width="15.8226495726%"/><col width="39.8717948718%"/><col width="44.3055555556%"/></colgroup>
+  <tr>
+    <td>
+      <p>A</p>
+    </td>
+    <td>
+      <p>3 x2</p>
+    </td>
+    <td>
+      <p style="color:#ff0000">red text color cell</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p>table (col1 1inch wide, row 2; row 2 2 inch min height)</p>
+    </td>
+    <td>
+      <p>with a nested list:</p>
+      <ol>
+        <li>point 1 (w/ subpoints)
+          <ol>
+            <li>this is a subpoint</li>
+          </ol>
+        </li>
+        <li>point 2</li>
+        <li>a footnote<a class="noteref" href="#id.4i7ojhp-fn2">2</a></li>
+      </ol>
+    </td>
+    <td>
+      <table>
+        <caption>Even the inner table<a class="noteref" href="#id.4i7ojhp-fn3">3</a> has a caption.</caption>
+        <colgroup><col width="33.5423197492%"/><col width="66.4576802508%"/></colgroup>
+        <tr>
+          <td>
+            <p>A</p>
+          </td>
+          <td>
+            <p>2x2</p>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>subtable<a class="noteref" href="#id.4i7ojhp-fn4">4</a></p>
+          </td>
+          <td style="background-color:#000099">
+            <p>this cell blue center</p>
+          </td>
+        </tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<table>
+  <colgroup><col width="50.0%"/><col width="50.0%"/></colgroup>
+  <tr>
+    <td>
+      <p>A table with some figures</p>
+    </td>
+    <td>
+      <p>This<img class="margin" src="5dc66f16086a0d49588f76304ead4ed3.png" style="width:12.12%"/>is very round</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <figure style="display:block"><img src="f839bbfc4f5e12408c654a732af7a3df.png" style="width:9.09%"/>
+        <figcaption>freestanding square<a class="noteref" href="#id.4i7ojhp-fn5">5</a>.</figcaption>
+      </figure>
+    </td>
+    <td>
+      <p>Another freestanding square<a class="noteref" href="#id.4i7ojhp-fn6">6</a>:</p>
+      <figure style="display:block"><img src="7d9777dc67cf6bffe72e81403e7a3b87.png" style="width:18.18%"/></figure>
+    </td>
+  </tr>
+</table>
+<p>Table with tricky headers (no spans, caused bug!):</p>
+<h2><a name="id.1ci93xb"></a>Pre-project (firm)</h2>
+<table>
+  <colgroup><col width="15.4577502404%"/><col width="29.5908556778%"/><col class="right" width="12.285012285%"/><col width="24.8264074351%"/><col width="17.8399743617%"/></colgroup>
+  <tr>
+    <th>
+      <p><b>Who</b></p>
+    </th>
+    <th>
+      <p><b>Resource</b></p>
+    </th>
+    <th class="right">
+      <p class="right"><b>Rate</b></p>
+    </th>
+    <th>
+      <p><b>Time</b></p>
+    </th>
+    <th>
+      <p><b>Total</b></p>
+    </th>
+  </tr>
+  <tr>
+    <td>
+      <p>One</p>
+    </td>
+    <td>
+      <p>1 FTE</p>
+    </td>
+    <td class="right">
+      <p>£0</p>
+    </td>
+    <td>
+      <p>6 days</p>
+    </td>
+    <td>
+      <p>£0</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p>Two</p>
+    </td>
+    <td>
+      <p>2.25 FTE</p>
+    </td>
+    <td class="right">
+      <p>£1</p>
+    </td>
+    <td>
+      <p>13 days</p>
+    </td>
+    <td>
+      <p>£13</p>
+    </td>
+  </tr>
+</table>
+<p>A table with multiple paragraphs of text:</p>
+<table>
+  <caption></caption>
+  <colgroup><col width="50.0%"/><col width="50.0%"/></colgroup>
+  <tr>
+    <td>
+      <p>Here’s some text.</p>
+    </td>
+    <td>
+      <p>And here’s a lot of text:</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec lacinia, elit eu facilisis lacinia, libero quam porta tortor, quis iaculis nunc lacus quis erat. Aliquam erat volutpat. Aliquam erat volutpat. Donec felis sapien, ullamcorper ut porttitor sed, vestibulum ac nulla. Aenean sodales arcu eget magna malesuada consequat. Maecenas cursus feugiat interdum. Curabitur in nunc nunc. Morbi tincidunt magna sit amet turpis lobortis in faucibus metus ornare. Maecenas porttitor dolor neque, in lacinia nisl. Etiam hendrerit accumsan odio eu tristique. Mauris pharetra molestie lectus, at dictum mauris gravida in. In hac habitasse platea dictumst.</p>
+      <p>Praesent ut erat vitae justo viverra posuere ac sed turpis. Praesent consequat ipsum sed purus ultrices laoreet venenatis enim rutrum. Sed commodo, nisl eu cursus sodales, ligula massa pharetra risus, ac consectetur orci nisl quis odio. Curabitur dapibus sollicitudin justo, ut sollicitudin leo ultricies sed. Etiam sit amet dui mi. Maecenas nec nulla vitae velit fringilla consequat. In lacus dolor, fermentum viverra commodo sit amet, venenatis eleifend purus. Suspendisse potenti. Vivamus pellentesque dui sed mauris adipiscing lacinia.</p>
+      <p>diam, malesuada in scelerisque eu, lacinia vitae nibh. Sed porta auctor hendrerit.</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p>A middling</p>
+    </td>
+    <td>
+      <p>row</p>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <p>Another multi paragraph Cell, ended by a list:</p>
+      <p>Second Paragraph</p>
+      <p>Lorem ipsum:</p>
+      <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Vivamus sed pretium tellus. Nam commodo justo in massa dignissim tincidunt. Proin enim metus, sagittis in adipiscing eu, lobortis id est. Sed cursus tempus arcu vel egestas. Morbi rhoncus sem ut quam suscipit fringilla. Fusce orci mauris, scelerisque in vehicula vel, consectetur non magna. Fusce neque dolor, tincidunt eget blandit eget, consequat vel nulla. Phasellus luctus pretium dui et faucibus. Maecenas posuere, ligula id viverra scelerisque, urna metus volutpat elit, non euismod magna neque a velit.</p>
+      <p>Mauris lobortis volutpat dui vel tincidunt. Nam congue odio fermentum dui pellentesque ac adipiscing libero tempor. Nulla facilisi. Nunc ac sem non justo venenatis hendrerit nec vitae quam. Etiam adipiscing pulvinar felis et vestibulum. Phasellus turpis augue, venenatis eget venenatis nec, rhoncus non orci. Aenean iaculis massa in elit congue ut sagittis nisl rutrum. Suspendisse potenti. Nullam feugiat eros vel libero rutrum ultricies. In hac habitasse platea dictumst. Duis dapibus, libero sit amet mollis tincidunt, quam neque feugiat massa, eget porttitor elit magna nec massa. Donec posuere ullamcorper lectus, non gravida elit bibendum quis. Morbi vitae lacinia nulla. Etiam nisi metus, viverra a auctor nec, tempor vitae purus. Mauris mi</p>
+      <ol>
+        <li>Last paragraph, in a list</li>
+      </ol>
+    </td>
+    <td>
+      <p>Short cell</p>
+    </td>
+  </tr>
+</table>
+<p>The preceding table has an empty caption, which means it should still be numbered but not have a label / text separator.</p>
+<section class="endnotes">
+  <aside class="endnote" id="id.4i7ojhp-fn1">
+    <p>This is a caption footnote.</p>
+    <p>It has a <b>second</b> paragraph.</p>
+  </aside>
+  <aside class="endnote" id="id.4i7ojhp-fn2">
+    <p>This is a table footnote!</p>
+    <p>With two paragraphs even!</p>
+  </aside>
+  <aside class="endnote" id="id.4i7ojhp-fn3">With its own footnotes and caption footnotes</aside>
+  <aside class="endnote" id="id.4i7ojhp-fn4">With its own footnotes of course.</aside>
+  <aside class="endnote" id="id.4i7ojhp-fn5">(not round at all)</aside>
+  <aside class="endnote" id="id.4i7ojhp-fn6">Well, to be precise its more a rectangle.</aside>
+</section>
+<h1><a name="id.3whwml4"></a>Standalone Figure Test</h1>
+<p>This inline figure in this document should float.</p>
+<figure style="display:block"><img src="b5bf5e0b65b51bd505330fb91c9dc986.png" style="width:87.88%"/>
+  <figcaption>This figure floats (hopefully).</figcaption>
+</figure>
+<p>Having the caption<a class="noteref" href="#id.3whwml4-fn1">1</a> in the next paragraph should give the same result</p>
+<figure style="display:block"><img src="b5bf5e0b65b51bd505330fb91c9dc986.png" style="width:87.88%"/>
+  <figcaption>This figure floats (hopefully).</figcaption>
+</figure>
+<p>Same without caption:</p>
+<figure style="display:block"><img src="b5bf5e0b65b51bd505330fb91c9dc986.png" style="width:87.88%"/></figure>
+<p>But inline, anchored inside the text stream should result in anchored margin figure:<img class="margin" src="4fb4b3fe55694e8d90cdfa61efa9f60d.png" style="width:60.61%"/></p>
+<p>That is, as long as it isn’t too big, because large figures will be assumed to be intended as freestanding</p>
+<figure class="textwidth" style="display:block"><img src="5b7877f880e8b0358f79c970cbc77f3a.png" style="width:100%"/></figure>
+<p>figure.</p>
+<p>Fixed position figures should always float:</p>
+<p>This fixed position figure in this document should float.</p>
+<figure style="display:block"><img src="b5bf5e0b65b51bd505330fb91c9dc986.png" style="width:87.88%"/>
+  <figcaption>This figure floats (hopefully).</figcaption>
+</figure>
+<p>Having the caption in the next paragraph should give the same result</p>
+<figure style="display:block"><img src="b5bf5e0b65b51bd505330fb91c9dc986.png" style="width:87.88%"/>
+  <figcaption>This figure floats (hopefully).</figcaption>
+</figure>
+<p>Fixed position Same without caption:</p>
+<figure style="display:block"><img src="b5bf5e0b65b51bd505330fb91c9dc986.png" style="width:87.88%"/></figure>
+<div class="pagebreak"></div>
+<p>These oversized figures should snap to extra margins:</p>
+<p>This inline figure in this document should float.</p>
+<figure class="fullwidth" style="display:block"><img src="b9a1d3fe4fcc0bb318f8849c2af19cd7.png" style="width:100%"/>
+  <figcaption>This figure<a class="noteref" href="#id.3whwml4-fn2">2</a> floats (hopefully).</figcaption>
+</figure>
+<p>Having the caption in the next paragraph should give the same result</p>
+<figure class="fullwidth" style="display:block"><img src="0acaa17f8a0897b80152a1f6e3116d64.png" style="width:100%"/>
+  <figcaption>This figure floats (hopefully).</figcaption>
+</figure>
+<p>Same without caption:</p>
+<figure class="fullwidth" style="display:block"><img src="0acaa17f8a0897b80152a1f6e3116d64.png" style="width:100%"/></figure>
+<section class="endnotes">
+  <aside class="endnote" id="id.3whwml4-fn1">which has a footnote</aside>
+  <aside class="endnote" id="id.3whwml4-fn2">(oversized)</aside>
+</section>
+<h1><a name="id.qsh70q"></a>Page Break Tests</h1>
+<p>This is the first page.</p>
+<div class="pagebreak"></div>
+<p>And this is the second page.</p>
+<h2><a name="id.3as4poj"></a>HEADINGS CAN ALSO HAVE PAGEBREAKS</h2>
+<div class="pagebreak"></div>
+<p>third page</p>
+<h1><a name="id.1pxezwc"></a><img class="margin" src="f1f9c15b55d72488fe9c66abebcef780.png" style="width:6.06%"/>Finally, some slightly malformed stuff<img class="margin" src="49d20d01ba5a45648c304bd6a5c07d70.png" style="width:12.12%"/></h1>
+<p>The next heading is just two figures and a space:</p>
+<figure style="display:block"><img src="49d20d01ba5a45648c304bd6a5c07d70.png" style="width:12.12%"/></figure>
+<figure style="display:block"><img src="49d20d01ba5a45648c304bd6a5c07d70.png" style="width:12.12%"/></figure>
+<ol>
+  <li>
+    <h5><a name="id.2p2csry"></a>A list of</h5>
+  </li>
+  <li>
+    <h6><a name="id.147n2zr"></a>headings</h6>
+  </li>
+</ol>
+<table>
+  <colgroup><col width="100.0%"/></colgroup>
+  <tr>
+    <td>
+      <h5><a name="id.3o7alnk"></a>This table just has a single column with a level5 heading</h5>
+    </td>
+  </tr>
+</table>
+</body>
+</html>
+

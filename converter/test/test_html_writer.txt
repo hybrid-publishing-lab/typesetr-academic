@@ -1,0 +1,48 @@
+-*- mode: rst ;encoding: utf-8 -*-
+>>> from converter.html_writer import write_body
+>>> from converter.internal import mkel
+
+Text should be properly escaped
+-------------------------------
+>>> write_body(['some text%^<>/'])
+'some text%^&lt;&gt;/'
+
+Unknown commands w/o args should be translated back to underlines and an error
+------------------------------------------------------------------------------
+>>> print write_body([('h1', {}, ['heading', ('CMD', {'class': ['frob']}, [])])])
+<h1>heading<span class="bad-command"><u>frob</u></span></h1>
+
+Unknown commands with args should
+-------------------------------------------------------------------------------
+>>> print write_body([('h1', {}, ['heading', ('CMD', {'class': ['frob']}, ['bar'])])])
+<h1>heading<span class="bad-command"><u>frob:</u>bar</span></h1>
+>>> print write_body([('CMD', {'class': ['<frob">']}, ['bar'])])
+<span class="bad-command"><u>&lt;frob"&gt;:</u>bar</span>
+
+``<script>`` and ``<style>`` elements will be escaped smartly
+-------------------------------------------------------------
+To create ``<script>`` and ``<style>`` elements that are both valid html and
+xml, we wrap them in CDATA, but only shen necessary:
+
+>>> print write_body([mkel('script', {}, ['alert("hello world"))'])])
+<script>
+ alert("hello world"))
+</script>
+>>> print write_body([mkel('script', {}, ['alert("hello heaven & world"))'])])
+<script>
+/*<![CDATA[*/
+ alert("hello heaven & world"))
+/*]]>*/
+</script>
+>>> print write_body([mkel('style', {}, ['''* {box-sizing: border-box;}
+... ul > li > ul { list-style-type: circle; }'''])])
+<style>
+ * {box-sizing: border-box;}
+ ul > li > ul { list-style-type: circle; }
+</style>
+>>> print write_body([mkel('style', {}, ['quote::before { content: "<<"; }'])])
+<style>
+/*<![CDATA[*/
+ quote::before { content: "<<"; }
+/*]]>*/
+</style>

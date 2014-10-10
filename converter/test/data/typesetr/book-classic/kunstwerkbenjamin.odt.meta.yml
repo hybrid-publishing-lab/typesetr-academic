@@ -1,0 +1,40 @@
+title:
+  supplied: Das Kunstwerk im Zeitalter seiner technischen Reproduzierbarkeit
+subtitle:
+  supplied: (Dritte Fassung)
+author:
+  supplied: Walter Benjamin
+date:
+  supplied: '1936'
+isbn:
+  supplied: 666-666-666-66
+  label: ISBN
+printing:
+  supplied: 3 4 5 6 7 8 9
+lang:
+  supplied: de
+  label: Language
+  type: lang
+license:
+  canonical: ''
+copyright:
+  canonical: ''
+abstract:
+  canonical: ''
+  type: rich-text
+bibliography:
+  canonical: ''
+  type: bibliography
+keywords:
+  canonical: ''
+draft:
+  canonical: 'no'
+  type: boolean
+cover-image:
+  canonical: ''
+  type: image
+toc:
+  canonical: 'no'
+  label: Table of contents
+  type: boolean
+

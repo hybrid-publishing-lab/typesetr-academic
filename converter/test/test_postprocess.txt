@@ -1,0 +1,196 @@
+-*- mode: rst ;encoding: utf-8 -*-
+===========================
+Tests for `postprocess.py`
+===========================
+
+>>> from pprint import pprint as pp
+>>> from converter.postprocess import *
+
+`tidy`
+======
+
+`tidy` should get rid of bogus spans
+------------------------------------
+>>> tidy([('span', {}, ['Footnote']),
+...       ('span',   {},   [('p',     {},     ['Some text'])])])
+['Footnote', ('p', {}, ['Some text'])]
+
+`tidy` should coalesce adjacent strings
+---------------------------------------
+>>> tidy([('h1', {}, ['This is a level 1 heading with ', u'comment'])])
+[('h1', {}, [u'This is a level 1 heading with comment'])]
+
+`tidy` should also coalesce spans
+---------------------------------
+>>> body = [('span', {'style': OrderedDict([('color', '#ff0000')])}, ['red']),
+...         ('span', {'style': OrderedDict([('color', '#ff0000')])}, [' ']),
+...         ('span', {'style': OrderedDict([('color', '#ff0000')])}, ['RED'])]
+>>> new_body = tidy(body)
+>>> new_body
+[('span', {'style': OrderedDict([('color', '#ff0000')])}, ['red RED'])]
+
+It may reuse content:
+
+>>> body[0][1] is new_body[0][1]
+True
+
+But not modify existing attributes:
+
+
+
+
+`tidy` should even lift spans styling
+-------------------------------------
+>>> pp(tidy([mkel('p', {},
+...              [mkel('span', {'style':OrderedDict([('color', '#bca')])}, ['span 1a ']),
+...               mkel('span', {'style':OrderedDict([('color', '#bca')])}, ['span 1b'])])]))
+[('p', {'style': OrderedDict([('color', '#bca')])}, ['span 1a span 1b'])]
+
+but not when there already is span styling:
+
+>>> pp(tidy([mkel('p', {'style': OrderedDict([('color', '#abc')])},
+...              [mkel('span', {'style':OrderedDict([('color', '#bca')])}, ['span 1a ']),
+...               mkel('span', {'style':OrderedDict([('color', '#bca')])}, ['span 1b'])])]))
+[('p',
+  {'style': OrderedDict([('color', '#abc')])},
+  [('span',
+    {'style': OrderedDict([('color', '#bca')])},
+    ['span 1a span 1b'])])]
+
+`tidy` should get rid of surplus paragraphs
+-------------------------------------------
+>>> pp(list(tidy([('.footnote', {}, [('p', {}, ['Bogus para'])])])))
+[('.footnote', {}, ['Bogus para'])]
+
+but only when they are singletons:
+
+>>> pp(list(tidy([('.footnote', {}, [('p', {}, ['Non-bogus para...']),
+...                                  ('p', {}, ['...as more follow'])])])))
+[('.footnote',
+  {},
+  [('p', {}, ['Non-bogus para...']), ('p', {}, ['...as more follow'])])]
+
+Same for 'li' etc:
+
+>>> pp(list(tidy([('li', {}, [('p', {}, ['Bogus para'])])])))
+[('li', {}, ['Bogus para'])]
+
+in all cases, we only lift if there are not other attributes:
+
+>>> pp(list(tidy([('li', {}, [('p', {'class': 'justify'}, ['Nonbogus para'])])])))
+[('li', {}, [('p', {'class': 'justify'}, ['Nonbogus para'])])]
+
+(although maybe we should look into lifting some types of attributes)
+
+
+
+`underlines_to_commands`
+========================
+underlines should be converted to `"CMD"` and `LIT` elements.
+-------------------------------------------------------------
+
+>>> pp(underlines_to_commands(
+...      ['some string', mkel('u', {}, ['foocmd:']),
+...       'foobar', mkel('b', {}, ['in bold'])]))
+['some string',
+ ('CMD', {'class': ['foocmd']}, ['foobar', ('b', {}, ['in bold'])])]
+>>> pp(underlines_to_commands(
+...      ['some string', mkel('u', {}, ['foocmd:']),
+...       'foobar', mkel('u', {}, ['barcmd:']), mkel('u', {}, ['quuxlit'])]))
+['some string',
+ ('CMD',
+  {'class': ['foocmd']},
+  ['foobar',
+   ('CMD', {'class': ['barcmd']}, [('LIT', {'class': ['quuxlit']}, [])])])]
+
+`unwrap_figures`
+================
+>>> img = ('img', {'src': 'http://...'}, [])
+>>> block_fig = ('figure', {'style': OrderedDict([('display', 'block')])}, [img])
+>>> inline_fig = ('figure', {'style': OrderedDict([('display', 'inline')])}, [img])
+
+Figures in empty paragraphs with no attributes should be unwrapped,
+regardless of whether they are block or inline, and be made block:
+
+>>> pp(list(unwrap_figures([('p', {}, [block_fig])])))
+[('figure',
+  {'style': OrderedDict([('display', 'block')])},
+  [('img', {'src': 'http://...'}, [])])]
+>>> pp(list(unwrap_figures([('p', {}, [inline_fig])])))
+[('figure',
+  {'style': OrderedDict([('display', 'block')])},
+  [('img', {'src': 'http://...'}, [])])]
+
+If the empty paragraph has attributes we should leave it alone:
+
+>>> pp(list(unwrap_figures([('p', {'id': 'foobar'}, [inline_fig])])))
+[('p',
+  {'id': 'foobar'},
+  [('figure',
+    {'style': OrderedDict([('display', 'inline')])},
+    [('img', {'src': 'http://...'}, [])])])]
+
+On the other hand, block figures should never occur inside paragraphs, so we
+need to split the paragraph on the block figure and lift the figure to the
+same level. On splitting a paragraph, we should transfer all its attributes to
+both halves, apart from the unique id attribute, if any.
+
+>>> pp(list(unwrap_figures([('p', {'id': 'foobar', 'class': 'qux'},
+...                               ['some text', block_fig, 'more text'])])))
+...
+[('p', {'class': 'qux', 'id': 'foobar'}, ['some text']),
+ ('figure',
+  {'style': OrderedDict([('display', 'block')])},
+  [('img', {'src': 'http://...'}, [])]),
+ ('p', {'class': 'qux'}, ['more text'])]
+
+Empty halves should be thrown away:
+
+>>> pp(list(unwrap_figures([('p', {}, ['some text', block_fig])])))
+[('p', {}, ['some text']),
+ ('figure',
+  {'style': OrderedDict([('display', 'block')])},
+  [('img', {'src': 'http://...'}, [])])]
+>>> pp(list(unwrap_figures([('p', {}, [block_fig, 'some text'])])))
+[('figure',
+  {'style': OrderedDict([('display', 'block')])},
+  [('img', {'src': 'http://...'}, [])]),
+ ('p', {}, ['some text'])]
+
+Attributes count as semi-empty; we only print the second half:
+
+>>> pp(list(unwrap_figures([('p', {'id': 'foobar'}, [block_fig, 'some text'])])))
+[('figure',
+  {'style': OrderedDict([('display', 'block')])},
+  [('img', {'src': 'http://...'}, [])]),
+ ('p', {'id': 'foobar'}, ['some text'])]
+
+Whitespace-only `<p>`s are purged
+
+>>> pp(list(unwrap_figures(tidy(space_normalize([('p', {}, ['  ', block_fig])])))))
+[('figure',
+  {'style': OrderedDict([('display', 'block')])},
+  [('img', {'src': 'http://...'}, [])])]
+
+`parse_cites`
+=============
+>>> from cStringIO import StringIO
+>>> from pybtex.database.input import bibtex
+>>> bib_entries = bibtex.Parser().parse_stream(StringIO('@book{Freud1930,\n  address = {Wien},\n  title = "{Das Unbehagen in der Kultur}",\n  publisher = {I.P.V.},\n  author = {Freud, Sigmund},\n  year = {1930}\n}')).entries
+>>> body = ['This is a cition:', ('a',
+...                {'href': 'https://zotero.org/groups/199597/items/E26VVM8Q'},
+...                ['[Freud1930]']),
+...         '!']
+>>> parse_cites(body, bib_entries, lambda x: x)
+['This is a cition:', ('CMD', {'class': ['autocite']}, ['Freud1930']), '!']
+ >>> bib_entries = bibtex.Parser().parse_stream(StringIO('@book{Freud1930,\n zoteroid={http://zotero.org/groups/199597/items/E26VVM8Q},\n address = {Wien},\n  title = "{Das Unbehagen in der Kultur}",\n  publisher = {I.P.V.},\n  author = {Freud, Sigmund},\n  year = {1930}\n}')).entries
+>>> cite_with_bad_space = ['This is a cition:', ('a',
+...                {'href': 'https://zotero.org/groups/199597/items/E26VVM8Q'},
+...                [' [Freud1930] ']), '-- spacing is a bit wrong']
+>>> parse_cites(cite_with_bad_space, bib_entries, lambda x: x)
+['This is a cition: ', ('CMD', {'class': ['autocite']}, ['Freud1930']), ' -- spacing is a bit wrong']
+>>> parse_cites(body, bib_entries, lambda x: x)
+['This is a cition:', ('CMD', {'class': ['autocite']}, ['Freud1930']), '!']
+>>> bib_entries = bibtex.Parser().parse_stream(StringIO('@book{Freud1930,\n zoteroid={http://zotero.org/groups/199597/items/666},\n address = {Wien},\n  title = "{Das Unbehagen in der Kultur}",\n  publisher = {I.P.V.},\n  author = {Freud, Sigmund},\n  year = {1930}\n}')).entries
+>>> parse_cites(body, bib_entries, lambda x: x)
+['This is a cition:', ('ERR', {'info': ['bad citation key', (), {}]}, [('a', {'href': 'https://zotero.org/groups/199597/items/E26VVM8Q'}, ['[Freud1930]'])]), '!']

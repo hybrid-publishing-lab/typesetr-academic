@@ -1,0 +1,32 @@
+#!/usr/bin/env python
+from collections import OrderedDict
+import sys
+
+from converter import orderedyaml as yaml
+
+USAGE = """unpack_meta [INPUT=stdin] [OUTPUT=stdout]
+Extract the supplied values for metadata.
+"""
+
+def main(args):
+    if not 0 <= len(args) <= 2:
+        print >> sys.stderr, USAGE
+        sys.exit(2)
+    inf = sys.stdin
+    outf = sys.stdout
+    if args and args[0] != '-':
+        inf = open(args[0], 'r+')
+        args.pop(0)
+    if args and args[0] != '-':
+        outf = open(args[0], 'w+')
+
+    meta = yaml.load(inf)
+    outmeta = OrderedDict()
+    for k in meta:
+        v = meta[k]
+        if 'supplied' in v:
+            outmeta[k] = v['supplied']
+    yaml.dump(outmeta, outf)
+
+if __name__ == '__main__':
+    main(sys.argv[1:])

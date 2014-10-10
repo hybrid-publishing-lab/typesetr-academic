@@ -1,0 +1,4 @@
+XXX(ash): epub-novel-test.docx was generated from epub-novel-test.odt
+by google docs, which seems to have encoded the images differently for
+each. I think this explains the difference in the metadata. We should
+try to figure out why it's different though.

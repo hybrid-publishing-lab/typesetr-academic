@@ -1,0 +1,40 @@
+lang:
+  canonical: en
+  label: Language
+  type: lang
+subtitle:
+  canonical: ''
+license:
+  canonical: ''
+copyright:
+  canonical: ''
+author:
+  canonical: ''
+abstract:
+  canonical: ''
+  type: rich-text
+title:
+  canonical: ''
+isbn:
+  canonical: ''
+  label: ISBN
+bibliography:
+  canonical: ''
+  type: bibliography
+keywords:
+  canonical: ''
+printing:
+  canonical: ''
+draft:
+  canonical: 'no'
+  type: boolean
+cover-image:
+  canonical: ''
+  type: image
+date:
+  canonical: ''
+toc:
+  canonical: 'no'
+  label: Table of contents
+  type: boolean
+

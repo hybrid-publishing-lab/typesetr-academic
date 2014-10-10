@@ -1,7 +1,7 @@
 About:
 -----
 
-Typesetr Converter is the core conversion engine of the typesetr.consortium.io Webservice developed by the Hybrid Publishing Consortium in cooperation with LShift Ltd.
+Typesetr Converter is the core conversion engine of the http://typesetr.consortium.io/ web service developed by the Hybrid Publishing Consortium in cooperation with LShift Ltd.
 
 About Hybrid Publishing Consortium
 

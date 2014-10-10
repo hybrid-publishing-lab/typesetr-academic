@@ -94,7 +94,7 @@ Prerequisites
  - Python 2.7
  - at least 3GB of free Space ( Texlive :/ )
 
-The package manager will solve all dependancies.
+The package manager will solve all dependencies.
 
 Package Installation
 ------------

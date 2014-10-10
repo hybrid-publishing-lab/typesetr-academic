@@ -125,7 +125,7 @@ Development
 
 Documentation
 -------------
-Link to Readthedocs
+ReadTheDocs http://consortium.readthedocs.org/
 
 Support
 -------

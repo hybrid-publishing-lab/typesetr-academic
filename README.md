@@ -3,7 +3,9 @@ About:
 
 Typesetr Converter is the core conversion engine of the typesetr.consortium.io Webservice developed by the Hybrid Publishing Consortium in cooperation with LShift Ltd.
 
-The Hybrid Publishing Consortium is a project of the Hybrid Publishing Lab in collaboration with partners and associates. The Hybrid Publishing Lab is part of the Leuphana University of Lüneburg Innovation-Incubator, financed by the European Regional Development Fund and co-funded by the German federal state of Lower Saxony.
+About Hybrid Publishing Consortium
+
+The Hybrid Publishing Consortium  (HPC) is a project of the Hybrid Publishing Lab in collaboration with partners and associates. The Hybrid Publishing Consortium is a research project with a mission to support the development of open source software for public infrastructures in publishing. One of our goals is to bring the ideal of universal access to independent publishing, in the way that the Open Access movement has changed academic publishing. We examine publishing workflows, build software components that enable multi-format conversion, e.g. eBooks, print-on-demand, online learning systems etc. We simultaneously promote computation and algorithm use in new hybridization in publishing formats, as well as valuing the knowledge worker, understanding publishing as a conflux of skills, technologies and machines. Within the wide variety of publishing types, we specialise in Museums, Libraries and Archives publishing. HPC is part of the Centre for Digital Cultures, Leuphana University, Germany and is funded by the EU and the German federal State of Lower Saxony.
 
 see: 
 
